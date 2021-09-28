@@ -1,0 +1,18 @@
+<div class="main">
+  <h1>All Items</h1>
+  <ul class="cards">
+
+    <li class="cards_item" *ngFor="let item of listItems">
+      <div class="card">
+        <div class="card_image"><img src="https://picsum.photos/500/300/?image=10"></div>
+        <div class="card_content">
+          <h2 class="card_title">{{item.name}}<span>{{item.price | currency: 'EUR' }}</span></h2>
+          <p class="card_text">{{item.desc}}</p>
+          <button class="btn card_btn">Buy</button>
+          <button class="btn card_btn">Add to cart</button>
+        </div>
+      </div>
+    </li>
+    
+  </ul>
+</div>
