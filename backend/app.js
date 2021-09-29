@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use('/items', require('./routes/item'));
+app.use(require('./routes'));
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`El servidor esta corriendo perfectamente en el puerto ${port}`);
