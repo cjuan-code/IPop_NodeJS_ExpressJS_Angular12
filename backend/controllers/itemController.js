@@ -1,6 +1,9 @@
 const Item = require('../models/Item');
 
 exports.createItem = async (req, res) => {
+
+    // res.send(req.body);
+
     try {
         let item;
         item = new Item(req.body);
@@ -14,7 +17,7 @@ exports.createItem = async (req, res) => {
 
 exports.getItems = async (req, res) => {
     try {
-        const items = await Item.find();
+        const items = await Item.find().populate('author');
         res.json(items);
     } catch (error) {
         console.log(error);
