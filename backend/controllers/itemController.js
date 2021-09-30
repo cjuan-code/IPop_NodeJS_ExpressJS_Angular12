@@ -51,7 +51,7 @@ exports.getItems = async (req, res) => {
 
 exports.getItem = async (req, res) => {
     try {
-        let item = await Item.findById(req.params.id).populate('author').populate('ubication', {ubication: 1}).populate('comment');
+        let item = await Item.findById(req.params.id).populate('author').populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'review'}, {path: 'author'}]});
         if (!item) {
             res.status(404).json({ msg: "Item doesn't exists"});
         }
