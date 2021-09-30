@@ -33,7 +33,7 @@ itemSchema.pre('validate', function(next) {
 });
 
 itemSchema.methods.slugify = function() {
-    this.slug = slugf(this.name) + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36);
+    this.slug = slugf(this.name) + '-' + (Math.random() * Math.pow(36, 6) | 0);
 };  
 
 // favs

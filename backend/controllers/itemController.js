@@ -2,8 +2,6 @@ const Item = require('../models/Item');
 
 exports.createItem = async (req, res) => {
 
-    // res.send(req.body);
-
     try {
         let item;
         item = new Item(req.body);
@@ -12,12 +10,12 @@ exports.createItem = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');
-    }
+    } 
 }
 
 exports.getItems = async (req, res) => {
     try {
-        const items = await Item.find().populate('author').populate('ubication', {ubication: 1});
+        const items = await Item.find().populate('author').populate('ubication', {ubication: 1}).populate('comment');
         res.json(items);
     } catch (error) {
         console.log(error);
@@ -25,35 +23,35 @@ exports.getItems = async (req, res) => {
     }
 }
 
-exports.updateItem = async (req, res) => {
-    try {
-        const { name, desc, price, ubication, img, viewed, liked} = req.body;
-        let item = await Item.findById(req.params.id);
+// exports.updateItem = async (req, res) => {
+//     try {
+//         const { name, desc, price, ubication, img, viewed, liked} = req.body;
+//         let item = await Item.findById(req.params.id);
 
-        if (!item) {
-            res.status(404).json({ msg: "Item doesn't exists"});
-        }
+//         if (!item) {
+//             res.status(404).json({ msg: "Item doesn't exists"});
+//         }
 
-        item.name = name;
-        item.desc = desc;
-        item.price = price;
-        item.ubication = ubication;
-        item.img = img;
-        item.viewed = viewed;
-        item.liked = liked;
+//         item.name = name;
+//         item.desc = desc;
+//         item.price = price;
+//         item.ubication = ubication;
+//         item.img = img;
+//         item.viewed = viewed;
+//         item.liked = liked;
 
-        item = await Item.findOneAndUpdate({_id: req.params.id}, item, {new: true});
-        res.json(item);
+//         item = await Item.findOneAndUpdate({_id: req.params.id}, item, {new: true});
+//         res.json(item);
 
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Hubo un error');
-    }
-}
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send('Hubo un error');
+//     }
+// }
 
 exports.getItem = async (req, res) => {
     try {
-        let item = await Item.findById(req.params.id);
+        let item = await Item.findById(req.params.id).populate('author').populate('ubication', {ubication: 1}).populate('comment');
         if (!item) {
             res.status(404).json({ msg: "Item doesn't exists"});
         }
