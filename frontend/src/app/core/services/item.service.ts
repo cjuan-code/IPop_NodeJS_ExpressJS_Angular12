@@ -12,7 +12,7 @@ export class ItemService {
   constructor(private http: HttpClient) {}
     getItems(): Observable<any> {
       // console.log(this.http.get(environment.url));
-      return this.http.get(environment.url);
+      return this.http.get(environment.urlItems);
     }
   }
 
