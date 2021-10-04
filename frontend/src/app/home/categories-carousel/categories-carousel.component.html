@@ -1,0 +1,19 @@
+<ul class="carousel slidingCarousel">
+  <input type="radio" checked id="1" name="s_activator" class="carousel__activator"/>
+  <input type="radio" id="2" name="s_activator" class="carousel__activator"/>
+
+  <div class="carousel__track">
+    <li class="carousel__slide" *ngFor="let data of carouselCategories">
+        <a routerLink="/shop/list/{{data.slug}}">
+            <div class="carousel__slide--content" style="background-image: url({{data.img}});">
+            <h2>{{data.name}}</h2>
+            </div>
+        </a>
+    </li>
+  </div>
+  
+  <div class="carousel__indicators">
+    <label for="1" class="carousel__indicator"></label>
+    <label for="2" class="carousel__indicator"></label>
+  </div>
+</ul>
