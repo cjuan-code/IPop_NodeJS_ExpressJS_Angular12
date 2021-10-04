@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlItems: 'http://localhost:4000/api/items'
+  urlItems: 'http://localhost:4000/api/items',
+  urlCategories: 'http://localhost:4000/api/categories'
 };
 
 /*
