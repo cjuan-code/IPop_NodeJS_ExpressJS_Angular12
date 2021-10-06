@@ -7,5 +7,6 @@ router.get('/', itemController.getItems);
 // router.put('/:id', itemController.updateItem);
 router.get('/:id', itemController.getItem);
 router.delete('/:id', itemController.removeItem);
+router.get('/cat/:id', itemController.getItemsByCat);
 
 module.exports = router;

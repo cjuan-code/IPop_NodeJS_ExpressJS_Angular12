@@ -15,7 +15,18 @@ exports.createItem = async (req, res) => {
 
 exports.getItems = async (req, res) => {
     try {
-        const items = await Item.find().populate('author').populate('ubication', {ubication: 1}).populate('comment');
+        const items = await Item.find().populate('author').populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'review'}, {path: 'author'}]});
+        res.json(items);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.getItemsByCat = async (req, res) => {
+    try {
+        const items = await Item.find({categ: {$in: [req.params.id]}}).populate('author').populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'review'}, {path: 'author'}]});
+        console.log(req.params.id);
         res.json(items);
     } catch (error) {
         console.log(error);
