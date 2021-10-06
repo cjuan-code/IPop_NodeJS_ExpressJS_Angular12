@@ -4,7 +4,7 @@
 
   <div class="carousel__track">
     <li class="carousel__slide" *ngFor="let data of carouselCategories">
-        <a routerLink="/shop/list/{{data.slug}}">
+        <a [routerLink]="['/shop', data.slug]">
             <div class="carousel__slide--content" style="background-image: url({{data.img}});">
             <h2>{{data.name}}</h2>
             </div>
