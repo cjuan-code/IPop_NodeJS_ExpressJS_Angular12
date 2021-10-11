@@ -8,7 +8,7 @@
         <div class="card_content">
           <h2 class="card_title">{{item.name}}<span>{{item.price | currency: 'EUR' }}</span></h2>
           <p class="card_text">{{item.desc}}</p>
-          <button class="btn card_btn">Buy</button>
+          <button class="btn card_btn" [routerLink]="['/shop/item', item.slug]">SEE</button>
           <button class="btn card_btn">Add to cart</button>
         </div>
       </div>
