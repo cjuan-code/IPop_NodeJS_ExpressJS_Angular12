@@ -18,5 +18,9 @@ export class ItemService {
     getItemsByCat(categ: string): Observable<any> {
       return this.http.get(environment.urlItems + "/cat/" + categ);
     }
+
+    getItem(slug: string): Observable<any> {
+      return this.http.get(environment.urlItems + '/' + slug);
+    }
   }
 

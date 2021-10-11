@@ -1,0 +1,38 @@
+<hr/>
+<div class="info-wrapper">
+    <div id="carousel">
+        <ul class="carousel slidingCarousel">
+            <input type="radio" checked id="1" name="s_activator" class="carousel__activator"/>
+          
+            <div class="carousel__track">
+              <li class="carousel__slide">
+                  <a>
+                      <div class="carousel__slide--content" style="background-image: url(https://picsum.photos/500/300/?image=10);">
+                      </div>
+                  </a>
+              </li>
+            </div>
+            
+            <div class="carousel__indicators">
+              <label for="1" class="carousel__indicator"></label>
+            </div>
+          </ul>
+    </div>
+    <div class="info">
+      <div class="information">
+        <h1>{{itemInfo[0].name}}<span>{{itemInfo[0].price | currency: 'EUR'}}</span></h1>
+        <hr/>
+        <p id="desc">{{itemInfo[0].desc}}</p>
+        <hr/>
+        <p><i class="fas fa-user"></i>{{itemInfo[0].author.username}}</p>
+        <p><i class="fas fa-map-marked-alt"></i>{{itemInfo[0].ubication.ubication}}</p>
+        <p><i class="fas fa-box"></i><span *ngIf="itemInfo[0].shipping == false">No</span><span *ngIf="itemInfo[0].shipping">Sí</span></p>
+        <p><strong>Desgaste: </strong> {{itemInfo[0].wear}}</p>
+      </div>
+      <div id="buttons">
+        <button>BUY</button>
+        <button>ADD TO CART</button>
+      </div>
+    </div>
+</div>
+<hr/>

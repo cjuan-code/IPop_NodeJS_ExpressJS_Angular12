@@ -2,14 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './layout/header.component';
 import { FooterComponent } from './layout/footer.component';
-import { ListItemsComponent } from './list_items/list-items.component';
+import { ListItemsComponent } from './list-items/list-items.component';
 import { RouterModule } from '@angular/router';
+import { ListDetailsComponent } from './list-details/list-details.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-    ListItemsComponent
+    ListItemsComponent,
+    ListDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { RouterModule } from '@angular/router';
   exports: [
     HeaderComponent,
     FooterComponent,
-    ListItemsComponent
+    ListItemsComponent,
+    ListDetailsComponent
   ],
 })
 export class SharedModule { }
