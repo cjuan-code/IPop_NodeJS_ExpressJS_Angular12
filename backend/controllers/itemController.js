@@ -15,7 +15,7 @@ exports.createItem = async (req, res) => {
 
 exports.getItems = async (req, res) => {
     try {
-        const items = await Item.find().populate('author').populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'review'}, {path: 'author'}]});
+        const items = await Item.find();
         res.json(items);
     } catch (error) {
         console.log(error);
@@ -25,8 +25,7 @@ exports.getItems = async (req, res) => {
 
 exports.getItemsByCat = async (req, res) => {
     try {
-        const items = await Item.find({categ: {$in: [req.params.id]}}).populate('author').populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'review'}, {path: 'author'}]});
-        console.log(req.params.id);
+        const items = await Item.find({categ: {$in: [req.params.id]}});
         res.json(items);
     } catch (error) {
         console.log(error);
@@ -62,7 +61,7 @@ exports.getItemsByCat = async (req, res) => {
 
 exports.getItem = async (req, res) => {
     try {
-        let item = await Item.findById(req.params.id).populate('author').populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'review'}, {path: 'author'}]});
+        let item = await Item.find({slug: req.params.id}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'review'}, {path: 'author'}]});
         if (!item) {
             res.status(404).json({ msg: "Item doesn't exists"});
         }
