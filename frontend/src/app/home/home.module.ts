@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
 import { CategoriesCarouselComponent } from './categories-carousel/categories-carousel.component';
 import { ScrollCategoriesComponent } from './scroll-categories/scroll-categories.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ScrollCategoriesComponent } from './scroll-categories/scroll-categories
   imports: [
     CommonModule,
     SharedModule,
-    HomeRoutingModule
+    HomeRoutingModule,
+    InfiniteScrollModule
   ]
 })
 export class HomeModule { }

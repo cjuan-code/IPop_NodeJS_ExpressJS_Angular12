@@ -1,0 +1,17 @@
+<div class="main" infinite-scroll
+[infiniteScrollDistance]="0.2"
+(scrolled)="onScrollDown()"
+>
+  <h1>All categories</h1>
+  <ul class="cards">
+    <li class="cards_item" *ngFor="let categ of listCategories">
+      <div class="card">
+        <div class="card_image"><img src="{{categ.img}}"></div>
+        <div class="card_content">
+          <h2 class="card_title">{{categ.name}}</h2>
+          <button class="btn card_btn" [routerLink]="['/shop', categ.slug]">See</button>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
