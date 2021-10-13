@@ -18,8 +18,8 @@ export class CategoriesCarouselComponent implements OnInit {
   }
 
   getCarouselCategories() {
-    this._categoriesService.getCategories().subscribe(data => {
-      this.carouselCategories = data.slice(0,2);
+    this._categoriesService.getCategories(0, 2).subscribe(data => {
+      this.carouselCategories = data;
     }, error => {
       console.log(error);
     })
