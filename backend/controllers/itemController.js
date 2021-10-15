@@ -23,6 +23,23 @@ exports.getItems = async (req, res) => {
     }
 }
 
+exports.getItemsPag = async (req, res) => {
+    try {
+
+        if (req.query.categ == 'all') {
+            const items = await Item.find().skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
+            res.json(items);
+        } else {
+            const items = await Item.find({categ: {$in: [req.query.categ]}}).skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
+            res.json(items);
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
 exports.getItemsByCat = async (req, res) => {
     try {
         const items = await Item.find({categ: {$in: [req.params.id]}});

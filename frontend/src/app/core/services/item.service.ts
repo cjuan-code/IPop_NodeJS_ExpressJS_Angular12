@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -21,6 +21,15 @@ export class ItemService {
 
     getItem(slug: string): Observable<any> {
       return this.http.get(environment.urlItems + '/' + slug);
+    }
+
+    getItemsPag(offset: number, limit: number, categ: string): Observable<any> {
+      let params = new HttpParams()
+      .set('offset', offset)
+      .set('limit', limit)
+      .set('categ', categ);
+
+      return this.http.get(environment.urlItems + '/pag/', {params});
     }
   }
 
