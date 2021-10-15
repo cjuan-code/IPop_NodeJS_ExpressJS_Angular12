@@ -1,0 +1,7 @@
+<div class="container">
+    <div class="pagination">
+      <button (click)="changePage(currentPage-1)" [attr.disabled]="(currentPage==pages[0]) ? '' : null">&laquo;</button>
+      <button *ngFor="let info of pages; let pos = index" [ngClass]="{'active': currentPage==(pos+1)}" (click)="changePage(info)">{{info}}</button>
+      <button (click)="changePage(currentPage+1)" [attr.disabled]="(currentPage==pages[pages.length-1]) ? '' : null">&raquo;</button>
+    </div>
+</div>

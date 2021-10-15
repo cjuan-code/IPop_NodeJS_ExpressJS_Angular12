@@ -5,13 +5,15 @@ import { FooterComponent } from './layout/footer.component';
 import { ListItemsComponent } from './list-items/list-items.component';
 import { RouterModule } from '@angular/router';
 import { ListDetailsComponent } from './list-details/list-details.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
     ListItemsComponent,
-    ListDetailsComponent
+    ListDetailsComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { ListDetailsComponent } from './list-details/list-details.component';
     HeaderComponent,
     FooterComponent,
     ListItemsComponent,
-    ListDetailsComponent
+    ListDetailsComponent,
+    PaginationComponent
   ],
 })
 export class SharedModule { }
