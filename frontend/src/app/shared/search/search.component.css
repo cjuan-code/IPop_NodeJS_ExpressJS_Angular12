@@ -1,0 +1,19 @@
+/* .whatever__search {
+    width: 40%;
+} */
+.whatever__search input {
+    width: 40%;
+    height: 35px;
+    padding: 0 20px;
+    border: 1px solid #DFDFDF;
+    border-radius: 3px;
+    color: #666666;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 300;
+    
+}
+.whatever__search input:focus {
+    border: 1px solid #666666;
+    transition: 0.35s ease;
+}

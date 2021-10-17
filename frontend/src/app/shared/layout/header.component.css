@@ -94,6 +94,8 @@ nav a:after {content: none;}
 	max-width: 1200px;
 	text-align: center;
 	margin: 0 auto;
+	display: grid;
+	grid-template-columns: 0.3fr 2.2fr 0.5fr;
 }
 
 /*	The header placeholder. It is displayed when the header is fixed to the top of the
@@ -130,6 +132,7 @@ nav a:after {content: none;}
 	/* font:16px Arial, Helvetica, sans-serif; */
 	line-height: 40px;
 	float: right;
+	/* margin: -3%; */
 }
 
 .header-fixed .header-limiter nav a{

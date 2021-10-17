@@ -23,11 +23,12 @@ export class ItemService {
       return this.http.get(environment.urlItems + '/' + slug);
     }
 
-    getItemsPag(offset: number, limit: number, categ: string): Observable<any> {
+    getItemsPag(offset: number, limit: number, categ: string, search: string): Observable<any> {
       let params = new HttpParams()
       .set('offset', offset)
       .set('limit', limit)
-      .set('categ', categ);
+      .set('categ', categ)
+      .set('search', search);
 
       return this.http.get(environment.urlItems + '/pag/', {params});
     }

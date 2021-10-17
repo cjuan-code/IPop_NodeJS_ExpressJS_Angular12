@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Event, NavigationStart, Router } from "@angular/router";
 import { Item } from '../../core/models/item';
 import { ItemService } from "../../core/services/item.service";
 
@@ -11,18 +12,35 @@ import { ItemService } from "../../core/services/item.service";
 export class ListItemsComponent implements OnInit {
 
     @Input() category = '';
+    @Input() search = '';
 
     listItems: Item[] = [];
-    numpages: number = 0;
+    numpages: number = 1;
     currentPage: number = 0;
     limit: number = 3;
     offset: number = 0;
 
-    constructor ( private _itemService: ItemService) {};
+    constructor ( private _itemService: ItemService, private router: Router) {
+        this.router.events.subscribe((event: Event) => {
+            if (event instanceof NavigationStart) {
+                if (this.search) {
+                    this.category = 'all';
+                    this.filterSearch();
+                }
+            }
+        })
+    }
     
     ngOnInit(): void {
-        this.checkIfCateg();
-        this.changePage(1);
+        
+        if (this.category) {
+            this.checkIfCateg();
+        }
+
+        if (this.search) {
+            this.category = 'all';
+            this.filterSearch();
+        }
     }
     
     getAllItems() {
@@ -45,8 +63,18 @@ export class ListItemsComponent implements OnInit {
         }
     }
 
+    filterSearch() {
+        this._itemService.getItems().subscribe(data => {
+            data = data.filter((dataa: { name: string, categ: string }) => dataa.name.match(this.search));
+            this.calculatePages(data);
+        }, error => {
+            console.log(error);
+        })
+    }
+
     calculatePages(data: []) {
         this.numpages = Math.ceil((data.length/3));
+        this.changePage(1);
     }
 
     changePage(page: any) {
@@ -61,7 +89,7 @@ export class ListItemsComponent implements OnInit {
 
         this.currentPage = page;
 
-        this._itemService.getItemsPag(this.offset, this.limit, this.category).subscribe(data => {
+        this._itemService.getItemsPag(this.offset, this.limit, this.category, this.search).subscribe(data => {
             this.listItems = data;
         })        
     }

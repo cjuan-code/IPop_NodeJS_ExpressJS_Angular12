@@ -10,6 +10,7 @@ export class ShopComponent implements OnInit {
 
   category: string = "";
   slug_item: string = "";
+  search: string = "";
   currentRoute: string = "";
   categ_shop: boolean = false;
   details_shop: boolean = false;
@@ -22,6 +23,9 @@ export class ShopComponent implements OnInit {
     if (this.currentRoute.startsWith('/shop/item')) {
       this.listDetails();
       this.details_shop = true;
+    } else if (this.currentRoute.startsWith('/shop/search')) {
+      this.listSearch();
+      this.categ_shop = true;
     } else {
       this.listCateg();
       this.categ_shop = true;
@@ -44,6 +48,12 @@ export class ShopComponent implements OnInit {
   listDetails() {
     this.actRoute.paramMap.subscribe(params => {
       this.slug_item = String(params.get('slug'));
+    })
+  }
+
+  listSearch() {
+    this.actRoute.paramMap.subscribe(params => {
+      this.search = String(params.get('data'));
     })
   }
 
