@@ -9,6 +9,7 @@ export class PaginationComponent implements OnInit {
 
   @Input()
   set numpages(numpages: number) {
+    this.pages = [];
     for (let i = 0; i < numpages; i++) {
       this.pages.push(i+1);
     }
