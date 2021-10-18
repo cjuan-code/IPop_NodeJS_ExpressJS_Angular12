@@ -15,7 +15,7 @@ export class ListItemsComponent implements OnInit {
     @Input() search = '';
 
     listItems: Item[] = [];
-    numpages: number = 1;
+    numpages: number = 0;
     currentPage: number = 0;
     limit: number = 3;
     offset: number = 0;
@@ -74,6 +74,11 @@ export class ListItemsComponent implements OnInit {
 
     calculatePages(data: []) {
         this.numpages = Math.ceil((data.length/3));
+        
+        if (this.numpages == 0) {
+            this.numpages = 1;
+        }
+        
         this.changePage(1);
     }
 
