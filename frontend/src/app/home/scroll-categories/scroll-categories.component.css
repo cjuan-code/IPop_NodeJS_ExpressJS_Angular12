@@ -93,7 +93,7 @@ img {
 
 .card_content {
   padding: 1rem;
-  background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);
+  background: linear-gradient(to bottom left, #5383d3 40%, #FFC39E 100%);
 }
 
 .card_title {
@@ -102,7 +102,7 @@ img {
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: capitalize;
-  margin: 0px;
+  margin-bottom: 3%;
 }
 
 .card_text {
