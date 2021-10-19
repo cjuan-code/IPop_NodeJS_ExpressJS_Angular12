@@ -12,7 +12,7 @@ export class ShopComponent implements OnInit {
   slug_item: string = "";
   search: string = "";
   currentRoute: string = "";
-  categ_shop: boolean = false;
+  shop: boolean = false;
   details_shop: boolean = false;
 
   constructor(private actRoute: ActivatedRoute, private router: Router) { }
@@ -25,10 +25,10 @@ export class ShopComponent implements OnInit {
       this.details_shop = true;
     } else if (this.currentRoute.startsWith('/shop/search')) {
       this.listSearch();
-      this.categ_shop = true;
+      this.shop = true;
     } else {
       this.listCateg();
-      this.categ_shop = true;
+      this.shop = true;
     }
 
   }

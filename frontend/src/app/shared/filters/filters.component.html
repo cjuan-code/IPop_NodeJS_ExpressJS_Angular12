@@ -1,0 +1,9 @@
+<form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+    <h2>Filters</h2>
+    <label for="category">Category: </label>
+    <select id="category" formControlName="category">
+        <option value="">--Select category--</option>
+        <option *ngFor="let category of allCategories" value="{{category.slug}}">{{category.name}}</option>
+    </select>
+    <button>Filter</button>
+</form>

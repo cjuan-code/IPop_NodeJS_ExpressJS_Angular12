@@ -13,12 +13,14 @@ export class ListItemsComponent implements OnInit {
 
     @Input() category = '';
     @Input() search = '';
+    @Input() filt = true;
 
     listItems: Item[] = [];
     numpages: number = 0;
     currentPage: number = 0;
     limit: number = 3;
     offset: number = 0;
+    filters: {} = {};
 
     constructor ( private _itemService: ItemService, private router: Router) {
         this.router.events.subscribe((event: Event) => {
@@ -72,13 +74,25 @@ export class ListItemsComponent implements OnInit {
         })
     }
 
+    filtering(dataFilters: any) {
+
+        this.filters = dataFilters;
+
+        this._itemService.getItems().subscribe(data => {
+            data = data.filter((dataa: { categ: string | any[]; }) => dataa.categ.includes(dataFilters.category));
+            this.calculatePages(data);
+        }, error => {
+            console.log(error);
+        })
+    }
+
     calculatePages(data: []) {
         this.numpages = Math.ceil((data.length/3));
         
         if (this.numpages == 0) {
             this.numpages = 1;
         }
-        
+
         this.changePage(1);
     }
 
@@ -94,7 +108,7 @@ export class ListItemsComponent implements OnInit {
 
         this.currentPage = page;
 
-        this._itemService.getItemsPag(this.offset, this.limit, this.category, this.search).subscribe(data => {
+        this._itemService.getItemsPag(this.offset, this.limit, this.category, this.search, true, this.filters).subscribe(data => {
             this.listItems = data;
         })        
     }

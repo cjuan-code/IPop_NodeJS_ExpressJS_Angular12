@@ -1,24 +1,21 @@
 /* Font */
 @import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
 
+.tfilter {
+  display: grid;
+  grid-template-columns: 0.3fr 1.7fr;
+}
+
+.ffilter {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
 /* Design */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
-}
-
-html {
-  background-color: #ecf9ff;
-}
-
-body {
-  color: #272727;
-  font-family: 'Quicksand', serif;
-  font-style: normal;
-  font-weight: 400;
-  letter-spacing: 0;
-  padding: 1rem;
 }
 
 .main{
@@ -93,7 +90,7 @@ img {
 
 .card_content {
   padding: 1rem;
-  background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);
+  background: linear-gradient(to bottom left, #5383d3 40%, #FFC39E 100%);
 }
 
 .card_title {

@@ -16,8 +16,8 @@ import { HomeModule } from './home/home.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule, 
-    SharedModule, // DECLARAR ACI!!!!!!!!!!!!!!!!!! SINO NO VA
+    HttpClientModule,
+    SharedModule,
     CoreModule,
     HomeModule,
     ShopModule

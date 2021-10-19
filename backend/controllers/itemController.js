@@ -31,6 +31,9 @@ exports.getItemsPag = async (req, res) => {
             if (req.query.search) {
                 const items = await Item.find({name: {$regex: req.query.search}}).skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
                 res.json(items);
+            } else if (req.query.filtering) {
+                const items = await Item.find({categ: {$in: [req.query.category]}}).skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
+                res.json(items);
             } else {
                 const items = await Item.find().skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
                 res.json(items);

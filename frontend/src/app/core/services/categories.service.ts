@@ -17,4 +17,8 @@ export class CategoriesService {
 
       return this.http.get(environment.urlCategories, {params});
     }
+    
+    getAllCategories() {
+      return this.http.get(environment.urlCategories + '/all/');
+    }
 }

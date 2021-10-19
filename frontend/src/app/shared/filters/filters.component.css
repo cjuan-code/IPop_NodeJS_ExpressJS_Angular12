@@ -1,0 +1,19 @@
+form {
+    background: linear-gradient(to bottom left, #5383d3 40%, #FFC39E 100%);
+    border: 1px solid black;
+    border-radius: 15px;
+    color: white;
+    height: 87%;
+    margin-top: 10%;
+    text-align: center;
+    width: 95%;
+}
+
+form h2 {
+    border-bottom: 1px solid black;
+    padding-bottom: 6%;
+}
+
+button {
+    margin-top: 5%;
+}

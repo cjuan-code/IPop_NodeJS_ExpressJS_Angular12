@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { ListDetailsComponent } from './list-details/list-details.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { SearchComponent } from './search/search.component';
+import { FiltersComponent } from './filters/filters.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -15,19 +17,20 @@ import { SearchComponent } from './search/search.component';
     ListItemsComponent,
     ListDetailsComponent,
     PaginationComponent,
-    SearchComponent
+    SearchComponent,
+    FiltersComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
+
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     ListItemsComponent,
     ListDetailsComponent,
-    PaginationComponent,
-    SearchComponent
   ],
 })
 export class SharedModule { }
