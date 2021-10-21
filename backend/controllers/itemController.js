@@ -32,8 +32,14 @@ exports.getItemsPag = async (req, res) => {
                 const items = await Item.find({name: {$regex: req.query.search}}).skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
                 res.json(items);
             } else if (req.query.filtering) {
-                const items = await Item.find({categ: {$in: [req.query.category]}}).skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
+
+                var items = await Item.find();
+                // .skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3)
+                items = items.filter((dataa) => dataa.categ.includes(req.query.category) || dataa.shipping == JSON.parse(req.query.shipping));
+                items = items.splice(req.query.offset, req.query.limit);
+                
                 res.json(items);
+                
             } else {
                 const items = await Item.find().skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
                 res.json(items);

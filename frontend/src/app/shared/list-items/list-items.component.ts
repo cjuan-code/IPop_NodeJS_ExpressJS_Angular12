@@ -79,7 +79,7 @@ export class ListItemsComponent implements OnInit {
         this.filters = dataFilters;
 
         this._itemService.getItems().subscribe(data => {
-            data = data.filter((dataa: { categ: string | any[]; }) => dataa.categ.includes(dataFilters.category));
+            data = data.filter((dataa: { categ: string | any[], shipping: boolean}) => dataa.categ.includes(dataFilters.category) || dataa.shipping == JSON.parse(dataFilters.shipping));
             this.calculatePages(data);
         }, error => {
             console.log(error);

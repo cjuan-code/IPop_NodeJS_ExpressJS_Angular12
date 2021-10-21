@@ -14,7 +14,8 @@ export class FiltersComponent implements OnInit {
 
   allCategories: any;
   filterForm = new FormGroup({
-    category: new FormControl('')
+    category: new FormControl(''),
+    shipping: new FormControl('')
   });
 
   constructor(private _categoriesService: CategoriesService) { }

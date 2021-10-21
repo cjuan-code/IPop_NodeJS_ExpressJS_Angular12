@@ -5,5 +5,11 @@
         <option value="">--Select category--</option>
         <option *ngFor="let category of allCategories" value="{{category.slug}}">{{category.name}}</option>
     </select>
+    <label for="shipping">Shipping:</label>
+    <select id="shipping" formControlName="shipping">
+        <option value="">--Select shipping--</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
     <button>Filter</button>
 </form>
