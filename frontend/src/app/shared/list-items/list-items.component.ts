@@ -13,7 +13,7 @@ export class ListItemsComponent implements OnInit {
 
     @Input() category = '';
     @Input() search = '';
-    @Input() filt = true;
+    @Input() filt = false;
 
     listItems: Item[] = [];
     numpages: number = 0;
@@ -21,6 +21,7 @@ export class ListItemsComponent implements OnInit {
     limit: number = 3;
     offset: number = 0;
     filters: {} = {};
+    ifFiltering: boolean = false;
 
     constructor ( private _itemService: ItemService, private router: Router) {
         this.router.events.subscribe((event: Event) => {
@@ -76,6 +77,7 @@ export class ListItemsComponent implements OnInit {
 
     filtering(dataFilters: any) {
 
+        this.ifFiltering = true;
         this.filters = dataFilters;
 
         this._itemService.getItems().subscribe(data => {
@@ -108,7 +110,7 @@ export class ListItemsComponent implements OnInit {
 
         this.currentPage = page;
 
-        this._itemService.getItemsPag(this.offset, this.limit, this.category, this.search, true, this.filters).subscribe(data => {
+        this._itemService.getItemsPag(this.offset, this.limit, this.category, this.search, this.ifFiltering, this.filters).subscribe(data => {
             this.listItems = data;
         })        
     }

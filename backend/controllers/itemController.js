@@ -31,11 +31,13 @@ exports.getItemsPag = async (req, res) => {
             if (req.query.search) {
                 const items = await Item.find({name: {$regex: req.query.search}}).skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
                 res.json(items);
-            } else if (req.query.filtering) {
+            } else if (req.query.filtering == 'true') {
 
                 var items = await Item.find();
                 // .skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3)
-                items = items.filter((dataa) => dataa.categ.includes(req.query.category) || dataa.shipping == JSON.parse(req.query.shipping));
+                let ifShipping = req.query.shipping == 'true' ? true : false;
+
+                items = items.filter((dataa) => dataa.categ.includes(req.query.category) || dataa.shipping == ifShipping);
                 items = items.splice(req.query.offset, req.query.limit);
                 
                 res.json(items);
