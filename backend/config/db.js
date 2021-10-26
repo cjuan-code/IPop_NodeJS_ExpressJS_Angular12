@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('dotenv').config({path: 'variables.env'});
+require('dotenv').config({path: 'var.env'});
 
 const connectDB = async () => {
     try {
