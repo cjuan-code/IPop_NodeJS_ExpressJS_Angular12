@@ -34,10 +34,7 @@ exports.getItemsPag = async (req, res) => {
             } else if (req.query.filtering == 'true') {
 
                 var items = await Item.find();
-                // .skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3)
-                let ifShipping = req.query.shipping == 'true' ? true : false;
-
-                items = items.filter((dataa) => dataa.categ.includes(req.query.category) || dataa.shipping == ifShipping);
+                items = items.filter((dataa) => dataa.categ.includes(req.query.category) || JSON.stringify(dataa.shipping) == req.query.shipping);
                 items = items.splice(req.query.offset, req.query.limit);
                 
                 res.json(items);
