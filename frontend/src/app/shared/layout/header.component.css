@@ -95,7 +95,7 @@ nav a:after {content: none;}
 	text-align: center;
 	margin: 0 auto;
 	display: grid;
-	grid-template-columns: 0.3fr 2.2fr 0.5fr;
+	grid-template-columns: 0.3fr 1.7fr 1fr;
 }
 
 /*	The header placeholder. It is displayed when the header is fixed to the top of the
@@ -224,4 +224,8 @@ body {
 	margin: 0;
 	padding: 0;
 	height: 1500px;
+}
+
+a {
+	cursor: pointer;
 }

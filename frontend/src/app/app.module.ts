@@ -9,6 +9,8 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { ShopModule } from './shop/shop.module';
 import { HomeModule } from './home/home.module';
+import { AuthModule } from './auth/auth.module';
+import { SettingsModule } from './settings/settings.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +22,9 @@ import { HomeModule } from './home/home.module';
     SharedModule,
     CoreModule,
     HomeModule,
-    ShopModule
+    ShopModule,
+    AuthModule,
+    SettingsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

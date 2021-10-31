@@ -1,20 +1,4 @@
-<!-- <header>
-    <div class="container">
-      <div class="logo-box">
-        <a routerLink="/">
-          <img src="https://secure.gravatar.com/avatar/fabdb283fe15708440314fae08b0e7a1?s=60&d=retro&r=">
-        </a>
-      </div>
-      <nav>
-      <ul>
-        <li><a routerLink="/">home</a></li>
-        <li><a routerLink="/shop/list">shop</a></li>
-     </ul>
-    </nav>
-    </div>
-  </header>
-   -->
-   
+ 
    <header class="header-fixed">
    
      <div class="header-limiter">
@@ -26,6 +10,9 @@
        <nav>
          <a routerLink="/">Home</a>
          <a routerLink="/shop">Shop</a>
+         <a routerLink="/login" *appShowAuthed="false">Login</a>
+         <a *appShowAuthed="true" routerLink="/settings">{{currentUser.username}}</a>
+         <a *appShowAuthed="true" (click)="closeSession()">Logout</a>
        </nav>
    
      </div>

@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../../controllers/userController');
+var auth = require('../auth');
 
-router.get('/:id', userController.getUser);
+router.get('/', auth.required, userController.loadUser);
+router.post('/login', userController.login);
+router.post('/register', userController.register);
+router.put('/update', auth.required, userController.updateUser);
 
 module.exports = router;
