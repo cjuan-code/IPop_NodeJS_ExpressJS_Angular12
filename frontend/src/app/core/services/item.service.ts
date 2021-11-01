@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 
-export class ItemService {
+export default class ItemService {
 
   constructor(private http: HttpClient) {}
     getItems(): Observable<any> {
@@ -34,5 +34,14 @@ export class ItemService {
 
       return this.http.get(environment.urlItems + '/pag/', {params});
     }
+
+    favorite(slug: string): Observable<any> {
+      return this.http.post(environment.urlItems + '/fav/', {slug});
+    }
+
+    unfavorite(slug: string): Observable<any> {
+      return this.http.delete(environment.urlItems + '/fav/' + slug);
+    }
+
   }
 

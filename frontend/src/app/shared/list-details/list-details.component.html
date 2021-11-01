@@ -31,7 +31,11 @@
       </div>
       <div id="buttons">
         <button>BUY</button>
-        <button>ADD TO CART</button>
+        <app-favorite-button
+          [item]="itemInfo[0]"
+          (toggle)="onToggleFavorite($event)">
+          {{ itemInfo[0].isLiked ? 'Unfavorite' : 'Favorite' }} item <span class="counter">({{ itemInfo[0].liked }})</span>
+        </app-favorite-button>
       </div>
     </div>
 </div>

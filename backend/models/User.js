@@ -50,20 +50,36 @@ UserSchema.methods.toAuthJSON = function(){
     };
 };
   
-// UserSchema.methods.toProfileJSONFor = function(user){
-//     return {
-//         username: this.username,
-//         bio: this.bio,
-//         profileImg: this.profileImg,
-//         following: user ? user.isFollowing(this._id) : false
-//     };
-// };
+UserSchema.methods.toProfileJSONFor = function(user){
+    return {
+        username: this.username,
+        bio: this.bio,
+        profileImg: this.profileImg,
+        // following: user ? user.isFollowing(this._id) : false
+    };
+};
 
 // fav
+UserSchema.methods.favorite = function(id){
+    if(this.favItems.indexOf(id) === -1){
+      this.favItems.push(id);
+    }
+  
+    return this.save();
+};
 
 // unfav
+UserSchema.methods.unfavorite = function(id){
+    this.favItems.remove(id);
+    return this.save();
+};
 
 // is fav
+UserSchema.methods.isFavorite = function(id){
+    return this.favItems.some(function(favoriteId){
+      return favoriteId.toString() === id.toString();
+    });
+};
 
 // follow 
 

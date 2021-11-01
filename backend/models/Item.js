@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 var uniqueValitador = require('mongoose-unique-validator');
 var slugf = require('slug');
+const User = require('../models/User');
 
 const itemSchema = mongoose.Schema({
     slug: {type: String, lowercase: true, unique: true},
@@ -37,10 +38,18 @@ itemSchema.methods.slugify = function() {
 };  
 
 // favs
+itemSchema.methods.updateFavoriteCount = function() {
+    var item = this;
+
+    return User.count({favItems: {$in: [item._id]}}).then(function(count){
+      item.liked = count;  
+      return item.save();
+    });
+  };
 
 // viewed
 
-itemSchema.methods.toJSONfor = function(item) {
+itemSchema.methods.toJSONfor = function(user) {
     return {
         slug: this.slug,
         name: this.name,
@@ -49,9 +58,10 @@ itemSchema.methods.toJSONfor = function(item) {
         categ: this.categ,
         ubication: this.ubication,      
         liked: this.liked,
+        isLiked: user ? user.isFavorite(this._id): false,
         viewed: this.viewed,
         comment: this.comment,
-        author: this.author,
+        author: user.toProfileJSONFor(user),
         publishDate: this.publishDate,
         wear: this.wear,
         state: this.state,

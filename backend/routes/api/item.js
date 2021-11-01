@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const itemController = require('../../controllers/itemController');
+var auth = require('../auth');
 
 router.post('/', itemController.createItem);
 router.get('/', itemController.getItems);
@@ -9,5 +10,7 @@ router.get('/pag', itemController.getItemsPag);
 router.get('/:id', itemController.getItem);
 router.delete('/:id', itemController.removeItem);
 router.get('/cat/:id', itemController.getItemsByCat);
+router.post('/fav', auth.required , itemController.favorite);
+router.delete('/fav/:slug', auth.required, itemController.unfavorite);
 
 module.exports = router;

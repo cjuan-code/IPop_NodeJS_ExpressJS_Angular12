@@ -11,6 +11,7 @@ import { FiltersComponent } from './filters/filters.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { ListErrorsComponent } from './list-errors/list-errors.component';
+import { FavoriteButtonComponent } from './buttons/favorite-button/favorite-button.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ListErrorsComponent } from './list-errors/list-errors.component';
     SearchComponent,
     FiltersComponent,
     ListErrorsComponent,
+    FavoriteButtonComponent,
     ShowAuthedDirective
   ],
   imports: [
@@ -36,6 +38,7 @@ import { ListErrorsComponent } from './list-errors/list-errors.component';
     ListItemsComponent,
     ListDetailsComponent,
     ListErrorsComponent,
+    FavoriteButtonComponent,
     ShowAuthedDirective
   ],
 })

@@ -1,4 +1,5 @@
 const Item = require('../models/Item');
+const User = require('../models/User');
 
 exports.createItem = async (req, res) => {
 
@@ -111,6 +112,60 @@ exports.removeItem = async (req, res) => {
         }
         await Item.findOneAndRemove({_id: req.params.id});
         res.json({ msg: "Item removed succesfully!"});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.favorite = async (req, res) => {
+    try {
+        let item = await Item.findOne({slug: req.body.slug});
+        if (!item) {
+            res.status(404).json({ msg: "Item doesn't exists"})
+        }
+
+        let item_id = item._id;
+
+        await User.findById(req.payload.id).then(function(user) {
+            if (!user) {
+                return res.sendStatus(401);
+            }
+
+            return user.favorite(item_id).then(function() {
+                return item.updateFavoriteCount().then(function(item) {
+                    return res.json({item: item.toJSONfor(user)});
+                });
+            });
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.unfavorite = async (req, res) => {
+    try {
+        let item = await Item.findOne({slug: req.params.slug});
+        if (!item) {
+            res.status(404).json({ msg: "Item doesn't exists"})
+        }
+
+        let item_id = item._id;
+
+        await User.findById(req.payload.id).then(function(user) {
+            if (!user) {
+                return res.sendStatus(401);
+            }
+
+            return user.unfavorite(item_id).then(function() {
+                return item.updateFavoriteCount().then(function(item) {
+                    return res.json({item: item.toJSONfor(user)});
+                });
+            });
+        });
+        
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Event, NavigationStart, Router } from "@angular/router";
 import { Item } from '../../core/models/item';
-import { ItemService } from "../../core/services/item.service";
+import ItemService from "../../core/services/item.service";
 
 @Component({
     selector: 'app-list-items',

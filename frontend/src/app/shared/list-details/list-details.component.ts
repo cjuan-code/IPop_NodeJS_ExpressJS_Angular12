@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Item } from 'src/app/core/models/item';
-import { ItemService } from 'src/app/core/services/item.service';
+import ItemService from 'src/app/core/services/item.service';
 
 @Component({
   selector: 'app-list-details',
@@ -28,4 +28,13 @@ export class ListDetailsComponent implements OnInit {
     })
   }
 
+  onToggleFavorite(favorited: boolean) {
+    this.itemInfo[0].isLiked = favorited;
+
+    if (favorited) {
+      this.itemInfo[0].liked++;
+    } else {
+      this.itemInfo[0].liked--;
+    }
+}
 }
