@@ -92,12 +92,24 @@ exports.getItemsByCat = async (req, res) => {
 // }
 
 exports.getItem = async (req, res) => {
+
     try {
-        let item = await Item.find({slug: req.params.id}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'review'}, {path: 'author'}]});
+        let item = await Item.findOne({slug: req.params.id}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate('comment'); // , populate: [{path: 'review'}, {path: 'author'}];
         if (!item) {
-            res.status(404).json({ msg: "Item doesn't exists"});
+            res.status(404).json({ msg: "Item doesn't exists"})
         }
-        res.json(item);
+
+        let item_id = item._id;
+
+        await User.findById(req.payload.id).then(function(user) {
+            if (!user) {
+                return res.sendStatus(401);
+            }
+
+            return res.json(item.toJSONfor(user));
+
+        });
+        
     } catch (error) {
         console.log(error);
         res.status(500).send('Hubo un error');

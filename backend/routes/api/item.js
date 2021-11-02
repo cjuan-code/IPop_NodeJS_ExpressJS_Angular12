@@ -7,7 +7,7 @@ router.post('/', itemController.createItem);
 router.get('/', itemController.getItems);
 router.get('/pag', itemController.getItemsPag);
 // router.put('/:id', itemController.updateItem);
-router.get('/:id', itemController.getItem);
+router.get('/:id', auth.optional, itemController.getItem);
 router.delete('/:id', itemController.removeItem);
 router.get('/cat/:id', itemController.getItemsByCat);
 router.post('/fav', auth.required , itemController.favorite);

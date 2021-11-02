@@ -21,7 +21,7 @@ var auth = {
   }),
   optional: jwt({
     secret: secret,
-    algorithms: ['sha512'],
+    algorithms: ['sha512', 'sha1', 'RS256', 'HS256'],
     userProperty: 'payload',
     credentialsRequired: false,
     getToken: getTokenFromHeader

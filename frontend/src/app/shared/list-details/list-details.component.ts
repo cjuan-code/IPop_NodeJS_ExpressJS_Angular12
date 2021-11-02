@@ -11,7 +11,23 @@ export class ListDetailsComponent implements OnInit {
 
   @Input() slug_item = '';
 
-  itemInfo: Item[] = [];
+  itemInfo: Item = {
+    slug: '', 
+    name: '',
+    desc: '',
+    price: 0,
+    categ: [''],
+    ubication: {ubication: ''},
+    liked: 0,
+    isLiked: false,
+    viewed: 0,
+    comment: [''],
+    author: {username: '', bio: '', profileImg: '', following: false},
+    wear: '',
+    state: '',
+    shipping: false,
+    img: ['']
+  };
 
   constructor(private _itemService: ItemService) { }
 
@@ -22,19 +38,19 @@ export class ListDetailsComponent implements OnInit {
   getItem() {
     this._itemService.getItem(this.slug_item).subscribe(data => {
       this.itemInfo = data;
-      console.log(this.itemInfo[0]);
+      console.log(data);
     }, error => {
       console.log(error);
     })
   }
 
   onToggleFavorite(favorited: boolean) {
-    this.itemInfo[0].isLiked = favorited;
+    this.itemInfo.isLiked = favorited;
 
     if (favorited) {
-      this.itemInfo[0].liked++;
+      this.itemInfo.liked++;
     } else {
-      this.itemInfo[0].liked--;
+      this.itemInfo.liked--;
     }
 }
 }
