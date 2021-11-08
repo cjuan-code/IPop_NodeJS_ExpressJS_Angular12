@@ -40,3 +40,34 @@
     </div>
 </div>
 <hr/>
+<div class="row">
+  <div class="col-xs-12 col-md-8 offset-md-2">
+
+    <div *appShowAuthed="true">
+      <app-list-errors [errors]="commentFormErrors"></app-list-errors>
+      <form class="card comment-form">
+        <fieldset [disabled]="isSubmitting">
+          <div class="card-block">
+            <textarea class="form-control" placeholder="Write a comment..." rows="3" [formControl]="commentControl"></textarea>
+          </div>
+          <div class="card-footer">
+            <img [src]="currentUser.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'" alt="user image" class="comment-author-img" />
+            <button (click)="addComment()">
+             Post Comment
+            </button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+    <div *appShowAuthed="false">
+      <a [routerLink]="['/login']">Sign in</a> or <a [routerLink]="['/register']">sign up</a> to add comments on this article.
+    </div>
+
+    <app-item-comment
+      *ngFor="let comment of itemInfo.comment"
+      [comment]="comment"
+      (deleteComment)="onDeleteComment(comment)">
+    </app-item-comment>
+  </div>
+</div>

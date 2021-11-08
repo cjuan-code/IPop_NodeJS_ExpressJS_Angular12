@@ -3,7 +3,7 @@ const Comment = require('../models/Comment');
 exports.getCommentByID = async (req, res) => {
 
     try {
-        let comment = await Comment.findById(req.params.id).populate('author').populate('item').populate('review');
+        let comment = await Comment.findById(req.params.id).populate('author').populate('item');
         if (!comment) {
             res.status(404).json({ msg: "Comment doesn't exists"});
         }

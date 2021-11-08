@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { ListErrorsComponent } from './list-errors/list-errors.component';
 import { FavoriteButtonComponent } from './buttons/favorite-button/favorite-button.component';
+import { ItemCommentComponent } from './list-details/item-comment/item-comment/item-comment.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FavoriteButtonComponent } from './buttons/favorite-button/favorite-butt
     FiltersComponent,
     ListErrorsComponent,
     FavoriteButtonComponent,
-    ShowAuthedDirective
+    ShowAuthedDirective,
+    ItemCommentComponent
   ],
   imports: [
     CommonModule,

@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
     token: '',
     username: '',
     bio: '',
-    image: ''
+    profileImg: ''
   };
   count: number = 0;
 

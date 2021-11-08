@@ -1,5 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { HttpHeaders } from '@angular/common/http';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Item } from 'src/app/core/models/item';
+import { User } from 'src/app/core/models/user';
+import { CommentsService } from 'src/app/core/services/comments.service';
 import ItemService from 'src/app/core/services/item.service';
 
 @Component({
@@ -28,8 +32,14 @@ export class ListDetailsComponent implements OnInit {
     shipping: false,
     img: ['']
   };
+  currentUser: any = {};
+  canModify: boolean = false;
+  commentControl = new FormControl();
+  commentFormErrors: [] = [];
+  isSubmitting = false;
+  isDeleting = false;
 
-  constructor(private _itemService: ItemService) { }
+  constructor(private _itemService: ItemService, private commentsService: CommentsService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getItem();
@@ -52,5 +62,35 @@ export class ListDetailsComponent implements OnInit {
     } else {
       this.itemInfo.liked--;
     }
-}
+  }
+
+  addComment() {
+    this.isSubmitting = true;
+    this.commentFormErrors = [];
+
+      const commentBody = this.commentControl.value;
+      this.commentsService
+        .add(this.itemInfo.slug, commentBody)
+        .subscribe(
+          data => {
+            this.itemInfo = data;
+            this.commentControl.reset('');
+            this.isSubmitting = false;
+            this.cd.markForCheck();
+          },
+          errors => {
+            this.isSubmitting = false;
+            this.commentFormErrors = errors.error.msg;
+            this.cd.markForCheck();
+          }
+        );
+  }
+
+  onDeleteComment(comment: any) {
+    
+    // per a que funcionara la request i entrara al interceptor he degut de anyadir el subscribe
+    this.commentsService.remove(comment._id, this.itemInfo.slug).subscribe(data => {
+      this.itemInfo = data;
+    });
+  }
 }

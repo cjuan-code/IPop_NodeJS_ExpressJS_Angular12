@@ -1,5 +1,6 @@
 const Item = require('../models/Item');
 const User = require('../models/User');
+const Comment = require('../models/Comment');
 
 exports.createItem = async (req, res) => {
 
@@ -94,21 +95,25 @@ exports.getItemsByCat = async (req, res) => {
 exports.getItem = async (req, res) => {
 
     try {
-        let item = await Item.findOne({slug: req.params.id}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate('comment'); // , populate: [{path: 'review'}, {path: 'author'}];
+        let item = await Item.findOne({slug: req.params.id}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: {path: 'author', select: 'username profileImg'}});
+    
         if (!item) {
             res.status(404).json({ msg: "Item doesn't exists"})
         }
 
-        let item_id = item._id;
-
-        await User.findById(req.payload.id).then(function(user) {
-            if (!user) {
-                return res.sendStatus(401);
-            }
-
-            return res.json(item.toJSONfor(user));
-
-        });
+        if (req.payload) {
+            await User.findById(req.payload.id).then(function(user) {
+                if (!user) {
+                    return res.sendStatus(401);
+                }
+    
+                return res.json(item.toJSONfor(user));
+    
+            });
+        } else {
+            return res.json(item.toJSONfor());
+        }
+        
         
     } catch (error) {
         console.log(error);
@@ -175,6 +180,77 @@ exports.unfavorite = async (req, res) => {
                 return item.updateFavoriteCount().then(function(item) {
                     return res.json({item: item.toJSONfor(user)});
                 });
+            });
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.createComment = async (req, res) => {
+
+    try {
+        var item = await Item.findOne({slug: req.body.comment.slug}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: {path: 'author'}});
+        if (!item) {
+            res.status(404).json({ msg: "Item doesn't exists"})
+        }
+
+        await User.findById(req.payload.id).then((user) => {
+            if (!user) {
+                return res.sendStatus(401);
+            }
+
+            if (req.body.comment.content == null) {
+                return res.status(404).json({ msg: "Empty comment"});
+            }
+
+            let comment = new Comment();
+            comment.content = req.body.comment.content;
+            comment.author = user._id;
+
+            comment.save();
+
+            item.comment.push(comment._id);
+
+            item.save().then(async () => {
+                var item2 = await Item.findOne({slug: req.body.comment.slug}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: {path: 'author', select: 'username profileImg'}});
+            
+                res.json(item2.toJSONfor(user));
+            });
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.deleteComment = async (req, res) => {
+
+    try {
+        var item = await Item.findOne({slug: req.params.slug});
+        if (!item) {
+            res.status(404).json({ msg: "Item doesn't exists"})
+        }
+
+
+        await User.findById(req.payload.id).then(async (user) => {
+            if (!user) {
+                return res.sendStatus(401);
+            }
+
+            let position = item.comment.indexOf(req.params.commentId);
+
+            item.comment.pop(position, 1);
+
+            await Comment.findOneAndRemove({_id: req.params.commentId});
+
+            item.save().then(async () => {
+                var item2 = await Item.findOne({slug: req.params.slug}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: {path: 'author', select: 'username profileImg'}});
+            
+                res.json(item2.toJSONfor(user));
             });
         });
         
