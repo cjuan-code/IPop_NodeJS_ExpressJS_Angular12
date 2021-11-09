@@ -46,7 +46,8 @@ UserSchema.methods.toAuthJSON = function(){
         mail: this.mail,
         token: this.generateJWT(),
         bio: this.bio,
-        profileImg: this.profileImg
+        profileImg: this.profileImg,
+        following: this.following
     };
 };
   
@@ -55,7 +56,7 @@ UserSchema.methods.toProfileJSONFor = function(user){
         username: this.username,
         bio: this.bio,
         profileImg: this.profileImg,
-        // following: user ? user.isFollowing(this._id) : false
+        following: this ? this.isFollowing(user._id) : false
     };
 };
 
@@ -81,10 +82,26 @@ UserSchema.methods.isFavorite = function(id){
     });
 };
 
-// follow 
+// follow
+UserSchema.methods.follow = function(id){
+    if(this.following.indexOf(id) === -1){
+      this.following.push(id);
+    }
+  
+    return this.save();
+};
 
 // unfollow
+UserSchema.methods.unfollow = function(id){
+    this.following.remove(id);
+    return this.save();
+};
 
-// is follow
+// is following
+UserSchema.methods.isFollowing = function(id){
+    return this.following.some(function(followId){
+        return followId.toString() === id.toString();
+    });
+}
 
 module.exports = mongoose.model('user', UserSchema);

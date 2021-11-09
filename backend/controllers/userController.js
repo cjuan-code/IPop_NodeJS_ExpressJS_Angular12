@@ -77,3 +77,29 @@ exports.updateUser = async (req, res, next) => {
     });
 
 }
+
+exports.follow = async (req, res) => {
+
+    let userLogged = await User.findOne({_id: req.payload.id});
+    let userFollowing = await User.findOne({username: req.body.username});
+
+    userLogged.following.push(userFollowing._id);
+
+    userLogged.save();
+
+    res.json(userLogged.toProfileJSONFor(userFollowing));
+}
+
+exports.unfollow = async (req, res) => {
+   
+    let userLogged = await User.findOne({_id: req.payload.id});
+    let userFollowing = await User.findOne({username: req.params.username});
+
+    let position = userLogged.following.indexOf(userFollowing._id);
+
+    userLogged.following.pop(position, 1);
+
+    userLogged.save();
+
+    res.json(userLogged.toProfileJSONFor(userFollowing));
+}

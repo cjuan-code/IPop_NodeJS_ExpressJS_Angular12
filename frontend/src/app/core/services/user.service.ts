@@ -29,7 +29,6 @@ export class UserService {
       
       this.http.get(environment.urlUsers)
       .subscribe(data => {
-        console.log(data);
         this.setAuth(data);
       }, err => {
         this.purgeAuth();
@@ -89,6 +88,14 @@ export class UserService {
     //   this.currentUserSubject.next(data.user);
     //   return data.user;
     // }));
+  }
+
+  follow(username: string): Observable<any> {
+    return this.http.post(environment.urlUsers + '/follow', {username: username});
+  }
+
+  unfollow(username: string): Observable<any> {
+    return this.http.delete(environment.urlUsers + '/follow/' + username);
   }
 
 }

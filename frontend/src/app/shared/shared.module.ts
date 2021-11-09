@@ -13,6 +13,7 @@ import { ShowAuthedDirective } from './show-authed.directive';
 import { ListErrorsComponent } from './list-errors/list-errors.component';
 import { FavoriteButtonComponent } from './buttons/favorite-button/favorite-button.component';
 import { ItemCommentComponent } from './list-details/item-comment/item-comment/item-comment.component';
+import { FollowButtonComponent } from './buttons/follow-button/follow-button/follow-button.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ItemCommentComponent } from './list-details/item-comment/item-comment/i
     ListErrorsComponent,
     FavoriteButtonComponent,
     ShowAuthedDirective,
-    ItemCommentComponent
+    ItemCommentComponent,
+    FollowButtonComponent
   ],
   imports: [
     CommonModule,

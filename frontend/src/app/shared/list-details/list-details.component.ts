@@ -5,6 +5,7 @@ import { Item } from 'src/app/core/models/item';
 import { User } from 'src/app/core/models/user';
 import { CommentsService } from 'src/app/core/services/comments.service';
 import ItemService from 'src/app/core/services/item.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-list-details',
@@ -15,7 +16,7 @@ export class ListDetailsComponent implements OnInit {
 
   @Input() slug_item = '';
 
-  itemInfo: Item = {
+  itemInfo: any = {
     slug: '', 
     name: '',
     desc: '',
@@ -39,7 +40,7 @@ export class ListDetailsComponent implements OnInit {
   isSubmitting = false;
   isDeleting = false;
 
-  constructor(private _itemService: ItemService, private commentsService: CommentsService, private cd: ChangeDetectorRef) { }
+  constructor(private _itemService: ItemService, private commentsService: CommentsService, private userService: UserService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getItem();
@@ -48,7 +49,9 @@ export class ListDetailsComponent implements OnInit {
   getItem() {
     this._itemService.getItem(this.slug_item).subscribe(data => {
       this.itemInfo = data;
-      console.log(data);
+      this.userService.currentUser.subscribe(data => {
+        this.itemInfo.author.following = (data.following.includes(this.itemInfo.author._id));
+      })
     }, error => {
       console.log(error);
     })
@@ -62,6 +65,10 @@ export class ListDetailsComponent implements OnInit {
     } else {
       this.itemInfo.liked--;
     }
+  }
+
+  onToggleFollowing(following: boolean) {
+    this.itemInfo.author.following = following;
   }
 
   addComment() {
@@ -88,7 +95,7 @@ export class ListDetailsComponent implements OnInit {
 
   onDeleteComment(comment: any) {
     
-    // per a que funcionara la request i entrara al interceptor he degut de anyadir el subscribe
+    // per a que funcionara la request i entrara al interceptor he degut d'afegir el subscribe
     this.commentsService.remove(comment._id, this.itemInfo.slug).subscribe(data => {
       this.itemInfo = data;
     });

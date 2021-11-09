@@ -24,7 +24,14 @@
         <hr/>
         <p id="desc">{{itemInfo.desc}}</p>
         <hr/>
-        <p><i class="fas fa-user"></i>{{itemInfo.author.username}}</p>
+        <p>
+          <i class="fas fa-user"></i>
+          {{itemInfo.author.username}} 
+          <app-follow-button
+            [user]="itemInfo.author"
+            (toggle)="onToggleFollowing($event)">
+          </app-follow-button>
+        </p>
         <p><i class="fas fa-map-marked-alt"></i>{{itemInfo.ubication.ubication}}</p>
         <p><i class="fas fa-box"></i><span *ngIf="itemInfo.shipping == false">No</span><span *ngIf="itemInfo.shipping">Sí</span></p>
         <p><strong>Desgaste: </strong> {{itemInfo.wear}}</p>

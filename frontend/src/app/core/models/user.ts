@@ -4,4 +4,5 @@ export interface User {
     username: string;
     bio: string;
     profileImg: string;
+    following?: boolean;
   }

@@ -25,7 +25,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.count == 0) {
-      console.log(this.count)
       this.userService.populate();
       this.count++;
     }
