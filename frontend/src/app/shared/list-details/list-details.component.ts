@@ -36,9 +36,10 @@ export class ListDetailsComponent implements OnInit {
   currentUser: any = {};
   canModify: boolean = false;
   commentControl = new FormControl();
-  commentFormErrors: [] = [];
+  commentFormErrors: Array<string> = [];
   isSubmitting = false;
   isDeleting = false;
+  newCommentReview: Number = 0;
 
   constructor(private _itemService: ItemService, private commentsService: CommentsService, private userService: UserService, private cd: ChangeDetectorRef) { }
 
@@ -52,6 +53,7 @@ export class ListDetailsComponent implements OnInit {
       this.userService.currentUser.subscribe(data => {
         this.itemInfo.author.following = (data.following.includes(this.itemInfo.author._id));
       })
+      console.log(this.itemInfo);
     }, error => {
       console.log(error);
     })
@@ -71,32 +73,47 @@ export class ListDetailsComponent implements OnInit {
     this.itemInfo.author.following = following;
   }
 
-  addComment() {
+  onToggleReview(value: Number) {
+    this.newCommentReview = value;
+  }
+
+  addComment(e: any) {
+    e.preventDefault();
+
     this.isSubmitting = true;
     this.commentFormErrors = [];
 
-      const commentBody = this.commentControl.value;
+    const commentBody = this.commentControl.value;
+
+    if (commentBody == null) {
+      this.commentFormErrors = ["Content can't be blank"];
+      this.isSubmitting = false;
+    } else {
       this.commentsService
-        .add(this.itemInfo.slug, commentBody)
-        .subscribe(
-          data => {
-            this.itemInfo = data;
-            this.commentControl.reset('');
-            this.isSubmitting = false;
-            this.cd.markForCheck();
-          },
-          errors => {
-            this.isSubmitting = false;
-            this.commentFormErrors = errors.error.msg;
-            this.cd.markForCheck();
-          }
-        );
+      .add(this.itemInfo.slug, commentBody, this.newCommentReview)
+      .subscribe(
+        data => {
+          this.itemInfo = data;
+          this.commentControl.reset('');
+          this.newCommentReview = 0;
+          this.isSubmitting = false;
+          this.cd.markForCheck();
+        },
+        errors => {
+          this.isSubmitting = false;
+          this.commentFormErrors = errors.error.msg;
+          this.cd.markForCheck();
+        }
+      );
+    }
   }
 
   onDeleteComment(comment: any) {
+
+    console.log(comment);
     
     // per a que funcionara la request i entrara al interceptor he degut d'afegir el subscribe
-    this.commentsService.remove(comment._id, this.itemInfo.slug).subscribe(data => {
+    this.commentsService.remove(comment._id, this.itemInfo.slug, comment.review._id).subscribe(data => {
       this.itemInfo = data;
     });
   }

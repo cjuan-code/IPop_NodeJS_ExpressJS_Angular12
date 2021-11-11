@@ -16,13 +16,13 @@ export class ItemCommentComponent implements OnInit {
     private cd: ChangeDetectorRef
   ) {}
 
-  private subscription: Subscription = new Subscription;
 
   @Input() comment: any = {
     id: 0,
     content: '',
     author: {},
     createdAt: '',
+    review: {}
   };
 
   @Output() deleteComment = new EventEmitter<boolean>();
@@ -33,6 +33,7 @@ export class ItemCommentComponent implements OnInit {
     // Load the current user's data
     this.comment.username = this.comment.author.username;
     this.comment.profileImg = this.comment.author.profileImg;
+    this.comment.valoration = this.comment.review.valoration;
     
     this.userService.currentUser.subscribe(
       (userData: User) => {
@@ -41,10 +42,6 @@ export class ItemCommentComponent implements OnInit {
       }
     );
   }
-
-  // ngOnDestroy() {
-  //   this.subscription.unsubscribe();
-  // }
 
   deleteClicked() {
     this.deleteComment.emit(true);

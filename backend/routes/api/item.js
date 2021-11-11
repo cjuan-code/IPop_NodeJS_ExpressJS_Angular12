@@ -13,6 +13,6 @@ router.get('/cat/:id', itemController.getItemsByCat);
 router.post('/fav', auth.required , itemController.favorite);
 router.delete('/fav/:slug', auth.required, itemController.unfavorite);
 router.post('/comment', auth.required, itemController.createComment);
-router.delete('/comment/:commentId/:slug', auth.required, itemController.deleteComment);
-// router.post('/comment', auth.required, itemController.deleteComment);
+router.delete('/comment/:commentId/:slug/:reviewId', auth.required, itemController.deleteComment);
+
 module.exports = router;

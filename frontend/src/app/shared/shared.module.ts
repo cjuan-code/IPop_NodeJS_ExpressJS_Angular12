@@ -12,8 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ShowAuthedDirective } from './show-authed.directive';
 import { ListErrorsComponent } from './list-errors/list-errors.component';
 import { FavoriteButtonComponent } from './buttons/favorite-button/favorite-button.component';
-import { ItemCommentComponent } from './list-details/item-comment/item-comment/item-comment.component';
+import { ItemCommentComponent } from './list-details/item-comment/item-comment.component';
 import { FollowButtonComponent } from './buttons/follow-button/follow-button/follow-button.component';
+import { ReviewComponent } from './list-details/item-comment/review/review.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FollowButtonComponent } from './buttons/follow-button/follow-button/fol
     FavoriteButtonComponent,
     ShowAuthedDirective,
     ItemCommentComponent,
-    FollowButtonComponent
+    FollowButtonComponent,
+    ReviewComponent
   ],
   imports: [
     CommonModule,

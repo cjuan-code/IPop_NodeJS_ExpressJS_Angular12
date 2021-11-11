@@ -33,7 +33,7 @@ export class AuthComponent implements OnInit {
   ngOnInit() {
 
     this.authType = this.router.url.slice(1, this.router.url.length);
-    this.title = this.title = (this.authType === 'login') ? 'Sign in' : 'Sign up';
+    this.title = (this.authType === 'login') ? 'Sign in' : 'Sign up';
 
     if (this.authType === 'register') {
       this.authForm.addControl('username', new FormControl());

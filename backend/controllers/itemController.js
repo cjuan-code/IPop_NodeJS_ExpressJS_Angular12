@@ -1,6 +1,7 @@
 const Item = require('../models/Item');
 const User = require('../models/User');
 const Comment = require('../models/Comment');
+const Review = require('../models/Review');
 
 exports.createItem = async (req, res) => {
 
@@ -95,7 +96,7 @@ exports.getItemsByCat = async (req, res) => {
 exports.getItem = async (req, res) => {
 
     try {
-        let item = await Item.findOne({slug: req.params.id}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: {path: 'author', select: 'username profileImg'}});
+        let item = await Item.findOne({slug: req.params.id}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'author', select: 'username profileImg'}, {path: 'review'}]});
     
         if (!item) {
             res.status(404).json({ msg: "Item doesn't exists"})
@@ -204,18 +205,23 @@ exports.createComment = async (req, res) => {
 
             if (req.body.comment.content == null) {
                 return res.status(404).json({ msg: "Empty comment"});
-            }
+            }        
+
+            let review = new Review();
+            review.valoration = Number(req.body.comment.valoration);
 
             let comment = new Comment();
             comment.content = req.body.comment.content;
             comment.author = user._id;
+            comment.review = review._id;
 
+            review.save();
             comment.save();
 
             item.comment.push(comment._id);
 
             item.save().then(async () => {
-                var item2 = await Item.findOne({slug: req.body.comment.slug}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: {path: 'author', select: 'username profileImg'}});
+                var item2 = await Item.findOne({slug: req.body.comment.slug}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'author', select: 'username profileImg'}, {path: 'review'}]});
             
                 res.json(item2.toJSONfor(user));
             });
@@ -240,15 +246,17 @@ exports.deleteComment = async (req, res) => {
             if (!user) {
                 return res.sendStatus(401);
             }
+        
+            await Review.findOneAndRemove({_id: req.params.reviewId});
 
             let position = item.comment.indexOf(req.params.commentId);
 
-            item.comment.pop(position, 1);
+            item.comment.splice(position, 1);
 
             await Comment.findOneAndRemove({_id: req.params.commentId});
 
             item.save().then(async () => {
-                var item2 = await Item.findOne({slug: req.params.slug}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: {path: 'author', select: 'username profileImg'}});
+                var item2 = await Item.findOne({slug: req.params.slug}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'author', select: 'username profileImg'}, {path: 'review'}]});
             
                 res.json(item2.toJSONfor(user));
             });

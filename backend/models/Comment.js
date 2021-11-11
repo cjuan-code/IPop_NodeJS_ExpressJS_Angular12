@@ -5,6 +5,7 @@ const CommentSchema = mongoose.Schema({
     author: {type: mongoose.Schema.Types.ObjectId, ref: 'user'},
     item: {type: mongoose.Schema.Types.ObjectId, ref: 'item'},
     content: String,
+    review : {type: mongoose.Schema.Types.ObjectId, ref: 'review'}
 }, {timestamps: true});
 
 CommentSchema.methods.toJSONFor = function(user){
@@ -12,7 +13,8 @@ CommentSchema.methods.toJSONFor = function(user){
       id: this._id,
       content: this.content,
       createdAt: this.createdAt,
-      author: this.author.toProfileJSONFor(user)
+      author: this.author.toProfileJSONFor(user),
+      review: this.review
     };
   };
 

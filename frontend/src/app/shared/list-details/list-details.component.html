@@ -43,6 +43,7 @@
           (toggle)="onToggleFavorite($event)">
           {{ itemInfo.isLiked ? 'Unfavorite' : 'Favorite' }} item <span class="counter">({{ itemInfo.liked }})</span>
         </app-favorite-button>
+        <p>{{itemInfo.rating}} ★ </p>
       </div>
     </div>
 </div>
@@ -56,10 +57,11 @@
         <fieldset [disabled]="isSubmitting">
           <div class="card-block">
             <textarea class="form-control" placeholder="Write a comment..." rows="3" [formControl]="commentControl"></textarea>
+            <app-review [stars]="newCommentReview" (toggle)="onToggleReview($event)"></app-review>
           </div>
           <div class="card-footer">
             <img [src]="currentUser.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'" alt="user image" class="comment-author-img" />
-            <button (click)="addComment()">
+            <button (click)="addComment($event)">
              Post Comment
             </button>
           </div>

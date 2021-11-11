@@ -97,7 +97,7 @@ exports.unfollow = async (req, res) => {
 
     let position = userLogged.following.indexOf(userFollowing._id);
 
-    userLogged.following.pop(position, 1);
+    userLogged.following.splice(position, 1);
 
     userLogged.save();
 

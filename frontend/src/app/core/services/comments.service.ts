@@ -11,12 +11,12 @@ import { JwtService } from './jwt.service';
 export class CommentsService {
   constructor (private http: HttpClient, private jwtService: JwtService) {}
 
-  add(slug: any, payload: any): Observable<any> {
-    return this.http.post(environment.urlItems + '/comment/', {comment: {content: payload, slug: slug}});
+  add(slug: any, payload: any, valoration: Number): Observable<any> {
+    return this.http.post(environment.urlItems + '/comment/', {comment: {content: payload, slug: slug, valoration: valoration}});
   }
   
-  remove(commentId: any, slug: any): Observable<any> {
-    return this.http.delete(environment.urlItems + '/comment/' + commentId + '/' + slug);
+  remove(commentId: any, slug: any, reviewId: any): Observable<any> {
+    return this.http.delete(environment.urlItems + '/comment/' + commentId + '/' + slug + '/' + reviewId);
   }
 
 }

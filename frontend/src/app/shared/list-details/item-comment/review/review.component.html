@@ -1,0 +1,24 @@
+<div class="rate" *ngIf="!fixed">
+    <input type="radio" id="star5" name="rate" value="5" (click)="reviewed($event)"/>
+    <label for="star5" title="text" [class.painted]="stars == 5">5 stars</label>
+    <input type="radio" id="star4" name="rate" value="4" (click)="reviewed($event)"/>
+    <label for="star4" title="text" [class.painted]="stars >= 4">4 stars</label>
+    <input type="radio" id="star3" name="rate" value="3" (click)="reviewed($event)"/>
+    <label for="star3" title="text" [class.painted]="stars >= 3">3 stars</label>
+    <input type="radio" id="star2" name="rate" value="2" (click)="reviewed($event)"/>
+    <label for="star2" title="text" [class.painted]="stars >= 2">2 stars</label>
+    <input type="radio" id="star1" name="rate" value="1" (click)="reviewed($event)"/>
+    <label for="star1" title="text" [class.painted]="stars >=1">1 star</label>
+</div>
+<div class="rate" *ngIf="fixed">
+    <input type="radio" id="star52" name="rate" value="5" disabled />
+    <label for="star52" title="text" [class.painted]="stars == 5">5 stars</label>
+    <input type="radio" id="star42" name="rate" value="4" disabled />
+    <label for="star42" title="text" [class.painted]="stars >= 4">4 stars</label>
+    <input type="radio" id="star32" name="rate" value="3" disabled />
+    <label for="star32" title="text" [class.painted]="stars >= 3">3 stars</label>
+    <input type="radio" id="star22" name="rate" value="2" disabled />
+    <label for="star22" title="text" [class.painted]="stars >= 2">2 stars</label>
+    <input type="radio" id="star12" name="rate" value="1" disabled />
+    <label for="star12" title="text" [class.painted]="stars >=1">1 star</label>
+</div>

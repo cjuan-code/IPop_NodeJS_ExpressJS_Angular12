@@ -17,8 +17,8 @@ const itemSchema = mongoose.Schema({
     wear: String,
     state: String,
     shipping: Boolean,
-    img: [String]
-
+    img: [String],
+    rating: Number
 }, {
     timestamps: true
 });
@@ -45,7 +45,21 @@ itemSchema.methods.updateFavoriteCount = function() {
       item.liked = count;  
       return item.save();
     });
-  };
+};
+
+itemSchema.methods.calculateRating = function() {
+    let total = 0;
+
+    this.comment.forEach(element => {
+        total = total + element.review.valoration;
+    });
+
+    if (this.comment.length == 0) {
+        return 0;
+    } else {
+        return total/this.comment.length;
+    }
+}
 
 // viewed
 
@@ -66,8 +80,8 @@ itemSchema.methods.toJSONfor = function(user) {
         wear: this.wear,
         state: this.state,
         shipping: this.shipping,
-        img: this.img
-
+        img: this.img,
+        rating: this.calculateRating()
     }
 }
 
