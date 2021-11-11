@@ -18,7 +18,8 @@ const itemSchema = mongoose.Schema({
     state: String,
     shipping: Boolean,
     img: [String],
-    rating: Number
+    rating: Number,
+    karma: Number
 }, {
     timestamps: true
 });
@@ -81,7 +82,8 @@ itemSchema.methods.toJSONfor = function(user) {
         state: this.state,
         shipping: this.shipping,
         img: this.img,
-        rating: this.calculateRating()
+        rating: this.calculateRating(),
+        karma: this.karma
     }
 }
 

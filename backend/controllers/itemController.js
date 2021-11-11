@@ -18,7 +18,7 @@ exports.createItem = async (req, res) => {
 
 exports.getItems = async (req, res) => {
     try {
-        const items = await Item.find();
+        const items = await Item.find().sort({'karma': 'desc'});
         res.json(items);
     } catch (error) {
         console.log(error);
@@ -32,22 +32,22 @@ exports.getItemsPag = async (req, res) => {
         if (req.query.categ == 'all') {
 
             if (req.query.search) {
-                const items = await Item.find({name: {$regex: req.query.search}}).skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
+                const items = await Item.find({name: {$regex: req.query.search}}).skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3).sort({'karma': 'desc'});
                 res.json(items);
             } else if (req.query.filtering == 'true') {
 
-                var items = await Item.find();
+                var items = await Item.find().sort({'karma': 'desc'});
                 items = items.filter((dataa) => dataa.categ.includes(req.query.category) || JSON.stringify(dataa.shipping) == req.query.shipping);
                 items = items.splice(req.query.offset, req.query.limit);
                 
                 res.json(items);
                 
             } else {
-                const items = await Item.find().skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
+                const items = await Item.find().skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3).sort({'karma': 'desc'});
                 res.json(items);
             }
         } else {
-            const items = await Item.find({categ: {$in: [req.query.categ]}}).skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3);
+            const items = await Item.find({categ: {$in: [req.query.categ]}}).skip(Number(req.query.offset) | 0).limit(Number(req.query.limit) | 3).sort({'karma': 'desc'});
             res.json(items);
         }
 
@@ -145,6 +145,10 @@ exports.favorite = async (req, res) => {
 
         let item_id = item._id;
 
+        item.karma = item.karma + 4;
+
+        console.log('fav', item.karma)
+
         await User.findById(req.payload.id).then(function(user) {
             if (!user) {
                 return res.sendStatus(401);
@@ -172,6 +176,10 @@ exports.unfavorite = async (req, res) => {
 
         let item_id = item._id;
 
+        item.karma = item.karma - 4;
+
+        console.log('unfav', item.karma);
+
         await User.findById(req.payload.id).then(function(user) {
             if (!user) {
                 return res.sendStatus(401);
@@ -197,6 +205,10 @@ exports.createComment = async (req, res) => {
         if (!item) {
             res.status(404).json({ msg: "Item doesn't exists"})
         }
+
+
+        item.karma = item.karma + (3 + (req.body.comment.valoration * 6));
+        console.log('create comment', item.karma);
 
         await User.findById(req.payload.id).then((user) => {
             if (!user) {
@@ -241,6 +253,12 @@ exports.deleteComment = async (req, res) => {
             res.status(404).json({ msg: "Item doesn't exists"})
         }
 
+        let rev = await Review.findOne({_id: req.params.reviewId});
+
+
+        item.karma = item.karma - (3 + (rev.valoration * 6));
+
+        console.log('remove comment', item.karma);
 
         await User.findById(req.payload.id).then(async (user) => {
             if (!user) {

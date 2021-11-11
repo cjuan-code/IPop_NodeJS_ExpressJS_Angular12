@@ -94,6 +94,8 @@ export class ListDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.itemInfo = data;
+          console.log(this.itemInfo);
+
           this.commentControl.reset('');
           this.newCommentReview = 0;
           this.isSubmitting = false;
@@ -115,6 +117,7 @@ export class ListDetailsComponent implements OnInit {
     // per a que funcionara la request i entrara al interceptor he degut d'afegir el subscribe
     this.commentsService.remove(comment._id, this.itemInfo.slug, comment.review._id).subscribe(data => {
       this.itemInfo = data;
+      console.log(this.itemInfo);
     });
   }
 }
