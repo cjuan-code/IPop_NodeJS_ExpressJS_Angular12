@@ -1,8 +1,6 @@
 # IPop
 This is my first project of 2nd year higher education training cycle of DAW (Web Development Application).
 
-## Getting Started
-***
 ## Prerequisites
 
 * [npm](https://www.npmjs.com/)
@@ -37,7 +35,7 @@ Login | It allows you to register and login in the application, like the items a
 Profile | It allows you to change your user information.
 
 ## Technologies
-***
+
 ### Frontend
 
 The technology used for the client is [Angular](https://angular.io/) in his 12 version. 
