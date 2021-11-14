@@ -43,5 +43,9 @@ export default class ItemService {
       return this.http.delete(environment.urlItems + '/fav/' + slug);
     }
 
+    buyItem(slug: string): Observable<any> {
+      return this.http.post(environment.urlBuy, {slug: slug});
+    }
+
   }
 

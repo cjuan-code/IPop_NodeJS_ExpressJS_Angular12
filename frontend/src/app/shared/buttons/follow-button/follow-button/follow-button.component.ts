@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { concatMap, tap } from 'rxjs/operators';
 import { User } from 'src/app/core/models/user';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -15,7 +16,8 @@ export class FollowButtonComponent {
   constructor(
     private router: Router,
     private userService: UserService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private notifyService: NotificationService
   ) {}
 
   @Input() user: any = {
@@ -48,6 +50,7 @@ export class FollowButtonComponent {
             .pipe(tap(data => {
               this.isSubmitting = false;
               this.toggle.emit(true);
+              this.notifyService.showInfo('Has seguido al usuario', '');
             }, err => this.isSubmitting = false));
 
         // Otherwise, unfollow this profile
@@ -56,6 +59,7 @@ export class FollowButtonComponent {
             .pipe(tap(data => {
               this.isSubmitting = false;
               this.toggle.emit(false);
+              this.notifyService.showInfo('Has dejado de seguir al usuario', '');
             }, err => this.isSubmitting = false));
         }
       }

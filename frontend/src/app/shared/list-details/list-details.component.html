@@ -37,7 +37,7 @@
         <p><strong>Desgaste: </strong> {{itemInfo.wear}}</p>
       </div>
       <div id="buttons">
-        <button>BUY</button>
+        <button (click)="buyItem(itemInfo.slug)">BUY</button>
         <app-favorite-button
           [item]="itemInfo"
           (toggle)="onToggleFavorite($event)">

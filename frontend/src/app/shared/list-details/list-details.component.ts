@@ -1,10 +1,9 @@
-import { HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Item } from 'src/app/core/models/item';
-import { User } from 'src/app/core/models/user';
+import { Router } from '@angular/router';
 import { CommentsService } from 'src/app/core/services/comments.service';
 import ItemService from 'src/app/core/services/item.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -41,7 +40,7 @@ export class ListDetailsComponent implements OnInit {
   isDeleting = false;
   newCommentReview: Number = 0;
 
-  constructor(private _itemService: ItemService, private commentsService: CommentsService, private userService: UserService, private cd: ChangeDetectorRef) { }
+  constructor(private _itemService: ItemService, private commentsService: CommentsService, private userService: UserService, private cd: ChangeDetectorRef, private router: Router, private notifyService: NotificationService) { }
 
   ngOnInit(): void {
     this.getItem();
@@ -53,7 +52,6 @@ export class ListDetailsComponent implements OnInit {
       this.userService.currentUser.subscribe(data => {
         this.itemInfo.author.following = (data.following.includes(this.itemInfo.author._id));
       })
-      console.log(this.itemInfo);
     }, error => {
       console.log(error);
     })
@@ -94,8 +92,6 @@ export class ListDetailsComponent implements OnInit {
       .subscribe(
         data => {
           this.itemInfo = data;
-          console.log(this.itemInfo);
-
           this.commentControl.reset('');
           this.newCommentReview = 0;
           this.isSubmitting = false;
@@ -112,12 +108,21 @@ export class ListDetailsComponent implements OnInit {
 
   onDeleteComment(comment: any) {
 
-    console.log(comment);
-    
     // per a que funcionara la request i entrara al interceptor he degut d'afegir el subscribe
     this.commentsService.remove(comment._id, this.itemInfo.slug, comment.review._id).subscribe(data => {
       this.itemInfo = data;
-      console.log(this.itemInfo);
     });
+  }
+
+  buyItem(slug: string) {
+    this.userService.isAuthenticated.subscribe(authenticated => {
+      if (!authenticated) {
+        this.router.navigateByUrl('/login');
+      } else {
+        this._itemService.buyItem(slug).subscribe(data => {
+          data ? this.notifyService.showSuccess('La compra se ha realizado con éxito', '') : this.notifyService.showError('No se ha podido realizar la compra', '');
+        });
+      }
+    })
   }
 }

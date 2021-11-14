@@ -6,6 +6,7 @@ import ItemService from 'src/app/core/services/item.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { of } from 'rxjs';
 import { concatMap, tap } from 'rxjs/operators';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-favorite-button',
@@ -34,7 +35,7 @@ export class FavoriteButtonComponent {
   @Output() toggle = new EventEmitter<boolean>();
   isSubmitting = false;
 
-  constructor(private _itemService: ItemService, private router: Router, private _userService: UserService, private cd: ChangeDetectorRef) { }
+  constructor(private _itemService: ItemService, private router: Router, private _userService: UserService, private cd: ChangeDetectorRef, private notifyService: NotificationService) { }
 
   toggleFavorite() {
     this.isSubmitting = true;
@@ -54,6 +55,7 @@ export class FavoriteButtonComponent {
             data => {
               this.isSubmitting = false;
               this.toggle.emit(true);
+              this.notifyService.showInfo('Has dado like al articulo', '');
             },
             err => this.isSubmitting = false
           ));
@@ -65,6 +67,7 @@ export class FavoriteButtonComponent {
             data => {
               this.isSubmitting = false;
               this.toggle.emit(false);
+              this.notifyService.showInfo('Has quitado el like al articulo', '');
             },
             err => this.isSubmitting = false
           ));

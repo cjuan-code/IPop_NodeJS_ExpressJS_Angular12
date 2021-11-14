@@ -51,13 +51,13 @@ itemSchema.methods.updateFavoriteCount = function() {
 itemSchema.methods.calculateRating = function() {
     let total = 0;
 
-    this.comment.forEach(element => {
-        total = total + element.review.valoration;
-    });
-
     if (this.comment.length == 0) {
         return 0;
     } else {
+        this.comment.forEach(element => {
+            total = total + element.review.valoration;
+        });
+
         return total/this.comment.length;
     }
 }

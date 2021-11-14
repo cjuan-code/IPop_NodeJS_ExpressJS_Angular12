@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationService } from '../core/services/notification.service';
 import { UserService } from '../core/services/user.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class AuthComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private fb: FormBuilder,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private notifyService: NotificationService
   ) {
     // use FormBuilder to create a form group
     this.authForm = this.fb.group({
@@ -50,7 +52,10 @@ export class AuthComponent implements OnInit {
     this.userService
     .attemptAuth(this.authType, credentials)
     .subscribe(
-      data => this.router.navigateByUrl('/'),
+      data => {
+        this.router.navigateByUrl('/');
+        this.notifyService.showSuccess('Ha iniciado sesion correctamente', '');
+      },
       err => {
         // console.log(err.error.msg);
         this.errors = err.error.msg;

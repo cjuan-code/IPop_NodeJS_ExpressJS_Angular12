@@ -138,7 +138,7 @@ exports.removeItem = async (req, res) => {
 
 exports.favorite = async (req, res) => {
     try {
-        let item = await Item.findOne({slug: req.body.slug});
+        let item = await Item.findOne({slug: req.body.slug}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'author', select: 'username profileImg'}, {path: 'review'}]});
         if (!item) {
             res.status(404).json({ msg: "Item doesn't exists"})
         }
@@ -146,8 +146,6 @@ exports.favorite = async (req, res) => {
         let item_id = item._id;
 
         item.karma = item.karma + 4;
-
-        console.log('fav', item.karma)
 
         await User.findById(req.payload.id).then(function(user) {
             if (!user) {
@@ -169,7 +167,7 @@ exports.favorite = async (req, res) => {
 
 exports.unfavorite = async (req, res) => {
     try {
-        let item = await Item.findOne({slug: req.params.slug});
+        let item = await Item.findOne({slug: req.params.slug}).populate('author', {username: 1}).populate('ubication', {ubication: 1}).populate({path: 'comment', populate: [{path: 'author', select: 'username profileImg'}, {path: 'review'}]});
         if (!item) {
             res.status(404).json({ msg: "Item doesn't exists"})
         }
@@ -177,8 +175,6 @@ exports.unfavorite = async (req, res) => {
         let item_id = item._id;
 
         item.karma = item.karma - 4;
-
-        console.log('unfav', item.karma);
 
         await User.findById(req.payload.id).then(function(user) {
             if (!user) {
@@ -208,7 +204,6 @@ exports.createComment = async (req, res) => {
 
 
         item.karma = item.karma + (3 + (req.body.comment.valoration * 6));
-        console.log('create comment', item.karma);
 
         await User.findById(req.payload.id).then((user) => {
             if (!user) {
@@ -258,7 +253,6 @@ exports.deleteComment = async (req, res) => {
 
         item.karma = item.karma - (3 + (rev.valoration * 6));
 
-        console.log('remove comment', item.karma);
 
         await User.findById(req.payload.id).then(async (user) => {
             if (!user) {
