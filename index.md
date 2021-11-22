@@ -80,5 +80,35 @@ Al acceder a localhost:9090, nos encontraremos el dashboard de prometheus, iremo
 
 ![prometheus_target](https://user-images.githubusercontent.com/79716922/142939513-08797297-4125-4f37-9db6-d7fea0305390.png)
 
+Por último, iremos a grafana, con la URL localhost:3500. En la parte izquierda, haremos click en el signo + > Create > Dashboard, como se muestra en la siguiente imagen:
 
+![grafana_1](https://user-images.githubusercontent.com/79716922/142939477-4d56e896-7933-494c-a414-3c25555cd266.png)
+
+Crearemos un nuevo panel.
+
+![grafana_2](https://user-images.githubusercontent.com/79716922/142939485-03c49e15-d150-4dc3-ad3f-4e3cff2d5a45.png)
+
+En la parte de Metrics, escribiremos el nombre de la variable contador de home (hello_world).
+
+![grafana_3](https://user-images.githubusercontent.com/79716922/142939487-0ba3af76-bcf3-46ef-b0ef-f55553b2ba5e.png)
+
+Haremos click en Apply, arriba a la derecha.
+
+![grafana_4](https://user-images.githubusercontent.com/79716922/142939491-a4efdfac-2428-40e6-87b8-136fbeedde9a.png)
+
+Ahora que ya tenemos creado el gráfico para home, añadiremos uno nuevo para message.
+
+![grafana_5](https://user-images.githubusercontent.com/79716922/142939496-740e4a06-4c8d-46b5-a20c-1d714e1cd6a4.png)
+
+En este caso, escribiremos la variable contador para message, como se muestra en la imagen:
+
+![grafana_6](https://user-images.githubusercontent.com/79716922/142939498-435c263c-f7f2-469c-8c60-83ced3d04677.png)
+
+Ahora que tenemos los dos gráficos, guardaremos el dashboard para poder acceder en otro momento y ver que han augmentado las visitas al entrypoint.
+
+![grafana_7](https://user-images.githubusercontent.com/79716922/142939500-66f2f8a4-2d59-4b91-866d-df85803866ea.png)
+
+Luego de acceder unas cuantas veces a localhost:4000 y localhost:4000/message, podemos ver que las gráficas se han actualizado:
+
+![grafana_8](https://user-images.githubusercontent.com/79716922/142939503-5b5dd3dd-1c8a-4529-b5bd-016f65b8cf51.png)
 
