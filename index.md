@@ -34,7 +34,11 @@ Antes de crear el docker-compose para la aplicación, utilizaremos el .env que s
 
 ![env](https://user-images.githubusercontent.com/79716922/142939471-ae88a566-ae26-42ec-b31f-16a9bdef7759.png)
 
-Una vez tenemos el .env, crearemos el docker-compose (que se encuentra en la raíz del proyecto) y ejecutar el comando en el directorio donde se encuentra el fichero docker-compose.yml:
+También crearemos la network que utilizaremos para los logs, que utilizarán los contenedores para comunicarse.
+
+![network_logs](https://user-images.githubusercontent.com/79716922/142939509-f93541e0-7b62-49ca-9049-208f7a76363d.png)
+
+Una vez tenemos el .env y la network, crearemos el docker-compose (que se encuentra en la raíz del proyecto) y ejecutar el comando en el directorio donde se encuentra el fichero docker-compose.yml:
 
 ```
 docker-compose up
@@ -44,6 +48,7 @@ Una vez iniciado, para importar los datos a mongo, abriremos un nuevo terminal y
 1. docker-compose exec mongo bash
 2. mongorestore --db=IPop
 ```
+![mongorestore](https://user-images.githubusercontent.com/79716922/142939506-a0d05fa6-15fb-4024-95c7-bf564f7694de.png)
 
 Ahora, con los datos importados, paramos el docker-compose up que hemos realizado previamente.
 
@@ -59,8 +64,21 @@ Una vez hayamos realizado todo lo anterior, accederemos a localhost:4200 y tendr
 
 ![web](https://user-images.githubusercontent.com/79716922/142939514-4b488b75-cba9-4a65-a9e7-e93cfff50aef.png)
 
+Para la utilización de grafana y prometheus, he modificado el app.js para que cuando se acceda a localhost:4000 se muestre un hello_world e incremente el numero de veces que hemos accedido a él, que luego utilizaremos en grafana para ver los gráficos.
 
+![hello_world](https://user-images.githubusercontent.com/79716922/142946255-c5da3a47-f137-4f0a-8682-0a6b0174f353.png)
 
+Si accedemos a localhost:4000/message, nos mostrará lo siguiente y se incrementará al igual que antes:
+
+![message](https://user-images.githubusercontent.com/79716922/142946261-c356ecc0-a3ab-45b4-a125-4ed04ec90d24.png)
+
+Y, si accedemos a localhost:4000/metrics, se mostrarán todas las metricas:
+
+![metrics](https://user-images.githubusercontent.com/79716922/142946265-0c60a8c5-009d-49f5-89a0-521fa17d8403.png)
+
+Al acceder a localhost:9090, nos encontraremos el dashboard de prometheus, iremos al apartado Status > Targets, ahi podremos observar el target, que este caso serán las métricas.
+
+![prometheus_target](https://user-images.githubusercontent.com/79716922/142939513-08797297-4125-4f37-9db6-d7fea0305390.png)
 
 
 
