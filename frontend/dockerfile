@@ -1,0 +1,29 @@
+# Utilizaremos la imagen de node en la version 16
+FROM node:16 as node
+
+# Creamos la carpeta donde estara la aplicación
+RUN mkdir -p /app
+
+# Trabajaremos sobre el directorio /app
+WORKDIR /app
+
+# Copiamos el archivo package.json
+COPY package.json .
+
+# Instalamos las dependencias
+RUN npm install
+
+# Copiamos todos los ficheros de la aplicación
+COPY . .
+
+# Instalamos angular cli
+RUN npm install -g @angular/cli@12.2.12
+
+# Ponemos la aplicación en producción
+RUN ng build --prod
+
+# Para correr la aplicación utilizaremos nginx
+FROM nginx:alpine
+
+# Copiamos los ficheros de la aplicación al directorio de nginx
+COPY --from=node /app/dist/frontend2 /usr/share/nginx/html

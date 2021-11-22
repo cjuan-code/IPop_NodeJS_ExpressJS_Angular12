@@ -1,0 +1,20 @@
+# Utilizaremos la imagen de node en la version 16
+FROM node:16
+
+# Creamos la carpeta donde estara la aplicación
+RUN mkdir -p /app
+
+# Trabajaremos sobre el directorio /app
+WORKDIR /app
+
+# Copiamos todos ls ficheros
+COPY . .
+
+# Instalamos las dependencias
+RUN npm install
+
+# Exponemos el puerto 4000 que es por el cual la applicación funcionará
+EXPOSE 4000
+
+# Iniciamos la aplicación al crear el contenedor
+ENTRYPOINT node app.js

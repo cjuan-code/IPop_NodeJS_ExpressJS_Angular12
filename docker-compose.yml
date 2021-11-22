@@ -1,0 +1,43 @@
+# Utilizaremos la versión 3.1 de docker compose
+version: '3.1'
+services:
+  # Servicio de mongo para la DB
+  mongo:
+    image: mongo:4.4
+    container_name: mongo_ipop
+    ports:
+      - ${MONGO_PORT}
+    volumes:
+      - ./backend/IPop:/dump
+    networks:
+      - ipop
+  # Servicio para el backend de la app
+  backend:
+    build: ./backend
+    container_name: backend_ipop
+    env_file: ./backend/var.env
+    ports:
+      - ${BACKEND_PORT}
+    networks:
+      - ipop
+      - logs
+    depends_on:
+      - mongo
+  # Servicio para el frontend de la app
+  frontend:
+    build: ./frontend
+    container_name: frontend_ipop
+    ports:
+      - ${FRONTEND_PORT}
+    networks:
+      - ipop
+      - logs
+    depends_on:
+      - mongo
+      - backend
+networks:
+  ipop:
+    driver: bridge
+  logs:
+    external:
+      name: logs
