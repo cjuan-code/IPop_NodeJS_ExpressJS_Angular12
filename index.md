@@ -30,7 +30,26 @@ Este es el dockerignore:
 
 ![dockerignore](https://user-images.githubusercontent.com/79716922/142939466-30a37aae-4f14-426c-8646-381b23d21700.png)
 
-Una vez tenemos los dockerfiles es crear el docker-compose para desplegar la aplicación que se encuentra en la raíz del proyecto.
+Antes de crear el docker-compose para la aplicación, utilizaremos el .env que se encuentra en la raíz para poner los puertos en los que se ejecutarán.
+
+![env](https://user-images.githubusercontent.com/79716922/142939471-ae88a566-ae26-42ec-b31f-16a9bdef7759.png)
+
+Una vez tenemos los dockerfiles es crear el docker-compose para desplegar la aplicación (que se encuentra en la raíz del proyecto) y ejecutar el comando en el directorio donde se encuentra el fichero docker-compose.yml:
+
+```
+docker-compose up
+```
+Una vez iniciado, para importar los datos a mongo, abriremos un nuevo terminal y ejecutaremos los siguientes comandos en orden:
+```
+1. docker-compose exec mongo bash
+2. mongorestore --db=IPop
+```
+
+Ahora, con los datos importados, paramos el docker-compose up que hemos realizado previamente.
+
+Lo siguiente es crear el docker-compose para grafana y prometheus, pero antes de ello, crearemos los ficheros grafana/datasources.yml y prometheus/prometheus.yml, que utilizaremos en el compose (se encuentran en el repositorio también).
+
+
 
 
 
