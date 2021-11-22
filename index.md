@@ -34,7 +34,7 @@ Antes de crear el docker-compose para la aplicación, utilizaremos el .env que s
 
 ![env](https://user-images.githubusercontent.com/79716922/142939471-ae88a566-ae26-42ec-b31f-16a9bdef7759.png)
 
-Una vez tenemos los dockerfiles es crear el docker-compose para desplegar la aplicación (que se encuentra en la raíz del proyecto) y ejecutar el comando en el directorio donde se encuentra el fichero docker-compose.yml:
+Una vez tenemos el .env, crearemos el docker-compose (que se encuentra en la raíz del proyecto) y ejecutar el comando en el directorio donde se encuentra el fichero docker-compose.yml:
 
 ```
 docker-compose up
@@ -48,6 +48,17 @@ Una vez iniciado, para importar los datos a mongo, abriremos un nuevo terminal y
 Ahora, con los datos importados, paramos el docker-compose up que hemos realizado previamente.
 
 Lo siguiente es crear el docker-compose para grafana y prometheus, pero antes de ello, crearemos los ficheros grafana/datasources.yml y prometheus/prometheus.yml, que utilizaremos en el compose (se encuentran en el repositorio también).
+
+Cuando lo tengamos, es hora de realizar el siguiente comando para poner todo en marcha:
+```
+docker-compose -f docker-compose.yml -f docker-compose-p-g.yml up
+```
+![docker-compose-doble](https://user-images.githubusercontent.com/79716922/142944963-accfab76-2c49-4bb5-a342-634f74684d4a.png)
+
+Una vez hayamos realizado todo lo anterior, accederemos a localhost:4200 y tendremos el deploy de la aplicación.
+
+![web](https://user-images.githubusercontent.com/79716922/142939514-4b488b75-cba9-4a65-a9e7-e93cfff50aef.png)
+
 
 
 
