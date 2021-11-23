@@ -41,7 +41,7 @@ También crearemos la network que utilizaremos para los logs, que utilizarán lo
 Una vez tenemos el .env y la network, crearemos el docker-compose (que se encuentra en la raíz del proyecto) y ejecutar el comando en el directorio donde se encuentra el fichero docker-compose.yml:
 
 ```
-docker-compose up
+docker-compose -f docker-compose.yml up
 ```
 Una vez iniciado, para importar los datos a mongo, abriremos un nuevo terminal y ejecutaremos los siguientes comandos en orden:
 ```
