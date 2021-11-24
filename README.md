@@ -1,71 +1,41 @@
-# IPop
-This is my first project of 2nd year higher education training cycle of DAW (Web Development Application).
+# Dockerizar la aplicación con dockerfiles y un bash script
 
-## Getting Started
-***
-## Prerequisites
+Para empezar en esta actividad, crearemos un tag para la versión 1.
 
-* [npm](https://www.npmjs.com/)
-* [NodeJS](https://nodejs.org/es/)
+![1](https://user-images.githubusercontent.com/79716922/143237777-de10e09e-a7c6-4ef3-b7f7-0349a7661c1b.png)
 
-## Installing
+Una vez realizado, haremos el push de los tags.
 
-1. Clone the repo.
-2. Go to backend folder and run 'npm install'.
-3. Go to frontend folder and run 'npm install'.
+![2](https://user-images.githubusercontent.com/79716922/143237794-b5e57aa3-887a-46dc-80c4-b3e05876eeda.png)
 
-## Starting up the app
+Lo siguiente es crear la rama main_dockerfile y movernos a ella.
 
-Once you've installed the dependeces, follow this steps:
+![3](https://user-images.githubusercontent.com/79716922/143237801-64947763-c79c-44e5-94d3-8665feb0484f.png)
 
-1. Open a terminal and run 'nodemon app.js' on backend folder.
-2. Open other terminal and run 'ng serve' on frontend folder.
+Ahora, crearemos los respectivos dockerfiles para cada parte de la aplicación, servidor y cliente.
 
-Following this steps, app is running on [localhost:4200](localhost:4200).
+![4](https://user-images.githubusercontent.com/79716922/143237802-2bc323d0-6932-44f6-9f63-9a054d78acb2.png)
 
-## Features
+Deberemos crear el siguiente fichero var.env en la carpeta backend/
 
-This application have the following modules.
+![5](https://user-images.githubusercontent.com/79716922/143237807-51d8650a-6a27-4447-88b5-a356f76f94b8.png)
 
-Module | Description
-:--- | :---
-Home | Main page of the application where you can see a slider and all the categories
-Shop | Show all the items where you can filter by categories and shipping (Items are ordered by karma, a points system from comments, valorations and likes).
-Item Details | Here you can see more detailed item information, with an image slider. Where if you are logged, you can like the item, follow item's owner, comment and leave a valoration.
-Search | This module is implemented in all the app where you can search for an item and it automatically redirects you to the shop.
-Login | It allows you to register and login in the application, like the items and follow other users.
-Profile | It allows you to change your user information.
+Por último, tenemos el script que se encargará de realizar el deploy completo de la aplicación.
 
-## Technologies
-***
-### Frontend
+![6](https://user-images.githubusercontent.com/79716922/143237810-c3b55866-ab9c-4541-90cc-415cb2a92662.png)
 
-The technology used for the client is [Angular](https://angular.io/) in his 12 version. 
+Una vez lo tengamos, le damos permisos de ejecución con el siguiente comando:
 
-* Implementations:
-    * Modules, Shared and Core based
-    * Auth:
-        * Guards
-        * Interceptors
-        * JWT Token
-        * Custom directives
-    * Observables and subscriptions
-    * Rxjs Subjects
-    * ngx-toastr
-    * ngx-infinite-scroll
-    * Reactive forms
+```
+chmod +x deploy.sh
+```
 
-### Backend
+Y una vez lo ejecutemos se desplegará la aplicación.
 
-The technology used for the server is [ExpressJS](https://expressjs.com/) in his 4.17.1 version.
+```
+./deploy.sh
+```
 
-* Implementations:
-    * Mongoose:
-        * Schemas (slug uniqueValidator)
-        * Models methods
-        * Controller
-    * Middleware:
-        * JWT Token
+Por último, para subir las imágenes a DockerHub debemos seguir los siguientes pasos:
 
-Server uses a [MongoDB](https://www.mongodb.com/) database.
-    
+![docker_hub](https://user-images.githubusercontent.com/79716922/143237816-c0a4c55f-b872-4998-84fb-ab81a19174f1.png)
